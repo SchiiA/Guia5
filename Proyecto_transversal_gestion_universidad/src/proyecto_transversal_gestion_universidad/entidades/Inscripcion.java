@@ -10,25 +10,26 @@ package proyecto_transversal_gestion_universidad.entidades;
  * @author Equipo
  */
 public class Inscripcion {
+
     private int idInscripto;
     private double nota;
-    private int idAlumno;
-    private int idMateria;
+    private Alumno alumno;
+    private Materia materia;
 
-    public Inscripcion(int idInscripto, double nota, int idAlumno, int idMateria) {
+    public Inscripcion(int idInscripto, double nota, Alumno alumno, Materia materia) {
         this.idInscripto = idInscripto;
         this.nota = nota;
-        this.idAlumno = idAlumno;
-        this.idMateria = idMateria;
+        this.alumno = alumno;
+        this.materia = materia;
     }
 
     public Inscripcion() {
     }
 
-    public Inscripcion(double nota, int idAlumno, int idMateria) {
+    public Inscripcion(double nota, Alumno alumno, Materia materia) {
         this.nota = nota;
-        this.idAlumno = idAlumno;
-        this.idMateria = idMateria;
+        this.alumno = alumno;
+        this.materia = materia;
     }
 
     public int getIdInscripto() {
@@ -47,27 +48,24 @@ public class Inscripcion {
         this.nota = nota;
     }
 
-    public int getIdAlumno() {
-        return idAlumno;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setIdAlumno(int idAlumno) {
-        this.idAlumno = idAlumno;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
-    public int getIdMateria() {
-        return idMateria;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setIdMateria(int idMateria) {
-        this.idMateria = idMateria;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
     @Override
     public String toString() {
-        return "idInscripto=" + idInscripto + ", nota=" + nota + ", idAlumno=" + idAlumno + ", idMateria=" + idMateria;
+        return "idInscripto=" + idInscripto + ", nota=" + nota + ", alumno=" + alumno + ", materia=" + materia;
     }
-    
-    
-    
 }
