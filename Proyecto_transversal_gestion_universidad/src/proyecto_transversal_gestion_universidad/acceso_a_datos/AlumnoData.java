@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.entidades.Alumno;
+import proyecto_transversal_gestion_universidad.entidades.Materia;
 
 
 public class AlumnoData {
@@ -178,6 +179,10 @@ public class AlumnoData {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
          return alumno;   
+    }
+
+    public Iterable<Materia> buscarAlumnoPorDni() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
  }
