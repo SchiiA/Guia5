@@ -40,6 +40,7 @@ public class Grafico extends javax.swing.JInternalFrame {
         jMIAlumnosMateria = new javax.swing.JMenuItem();
         jMSalir = new javax.swing.JMenu();
 
+        setClosable(true);
         setPreferredSize(new java.awt.Dimension(650, 450));
 
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(650, 450));
@@ -105,11 +106,11 @@ public class Grafico extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
         );
 
         pack();

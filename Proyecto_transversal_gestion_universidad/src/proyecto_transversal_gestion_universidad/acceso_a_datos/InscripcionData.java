@@ -158,6 +158,7 @@ public class InscripcionData {
             if(rs==1){
                 JOptionPane.showMessageDialog(null, "Inscripcion eliminada");
             }
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al ingresar a la tabla inscripcion");
         }
@@ -174,6 +175,7 @@ public class InscripcionData {
             if(rs==1){
                 JOptionPane.showMessageDialog(null, "Nota actualizada");
             }
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al ingresar a la tabla inscripcion");
         }
