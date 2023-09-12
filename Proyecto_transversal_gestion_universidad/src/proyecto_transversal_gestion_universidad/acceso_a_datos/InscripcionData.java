@@ -10,10 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import proyecto_transversal_gestion_universidad.entidades.Alumno;
 import proyecto_transversal_gestion_universidad.entidades.Inscripcion;
+import proyecto_transversal_gestion_universidad.entidades.Materia;
 
 /**
  *
@@ -50,6 +50,28 @@ public class InscripcionData {
     }
     
     public ArrayList<Inscripcion> obtenerInscripciones(){
-        return null;
+        ArrayList<Inscripcion> lista=new ArrayList<>();
+        Inscripcion ins=null;
+        String sql="select* from inscripcion in join alumno al on(in.idALumno=al.idAlumno) join materia mat on (in.idMateria=mat.idMateria) where al.estado=true and mat.estado=true";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                ins.setIdInscripto(rs.getInt("idInscripcion"));
+                ins.setNota(rs.getDouble("nota"));
+                int idAlumno=(rs.getInt("idAlumno"));
+                Alumno alumno=aluData.buscarAlumnoPorDni(idAlumno);
+                ins.setAlumno(alumno);
+                int idMateria=rs.getInt("idMateria");
+                Materia materia=matData.buscarMateria(idMateria);
+                ins.setMateria(materia);
+                lista.add(ins);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar a la tabla inscripcion");
+        }
+        return lista;
     }
+    
 }

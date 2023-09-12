@@ -5,10 +5,16 @@
  */
 package proyecto_transversal_gestion_universidad.acceso_a_datos;
 
+import proyecto_transversal_gestion_universidad.entidades.Materia;
+
 /**
  *
  * @author Equipo
  */
 public class MateriaData {
-    
+
+    static Materia bus;
+    public Materia buscarMateria(int idMateria){
+        return null;
+    }
 }

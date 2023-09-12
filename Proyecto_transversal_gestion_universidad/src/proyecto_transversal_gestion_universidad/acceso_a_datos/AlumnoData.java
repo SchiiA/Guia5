@@ -44,7 +44,6 @@ public class AlumnoData {
                             
             }
             ps.close();
-            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla alumno");
         }
@@ -68,10 +67,13 @@ public class AlumnoData {
                 
                 JOptionPane.showMessageDialog(null, "alumno modificado");
             }
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error al acceder a la tabla alumno");
         }
     }
+    
+    
     public void eliminarAlumno (int id){
     
     String sql="UPDATE alumno SET estado =0 WHERE idAlumno= ?";
@@ -84,11 +86,13 @@ public class AlumnoData {
             
                 JOptionPane.showMessageDialog(null, "Alumno Eliminado");
             }
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error al acceder a la tabla alumno");
         }
          
     }
+    
     
     public List<Alumno> listarAlumnos(){
     String sql="SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ? AND estado= 1";
@@ -108,11 +112,9 @@ public class AlumnoData {
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setActivo(true);
                 alumnos.add(alumno);
-                
             
             }
-        
-        
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -142,13 +144,14 @@ public class AlumnoData {
             
             JOptionPane.showMessageDialog(null,"no existe ese alumno");
             }
-        
-        
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
          return alumno;   
     }
+    
+    
     public Alumno buscarAlumnoPorId(int id){
     String sql="SELECT dni,apellido,nombre,fechaNacimiento FROM alumno WHERE idAlumno= ? AND estado= 1";
     Alumno alumno =null;
@@ -170,8 +173,7 @@ public class AlumnoData {
             
             JOptionPane.showMessageDialog(null,"no existe ese alumno");
             }
-        
-        
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
