@@ -198,7 +198,7 @@ public class InscripcionData {
             }
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al ingresar a las tablas");
         }
         return alumnos;
     }
