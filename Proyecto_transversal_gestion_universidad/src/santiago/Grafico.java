@@ -5,19 +5,24 @@
  */
 package santiago;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+
 /**
  *
  * @author User
  */
-public class Grafico extends javax.swing.JInternalFrame {
+public class Grafico extends javax.swing.JFrame {
 
     /**
      * Creates new form Grafico
      */
     public Grafico() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,20 +45,25 @@ public class Grafico extends javax.swing.JInternalFrame {
         jMIAlumnosMateria = new javax.swing.JMenuItem();
         jMSalir = new javax.swing.JMenu();
 
-        setPreferredSize(new java.awt.Dimension(650, 450));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setPreferredSize(new java.awt.Dimension(580, 420));
 
-        jDesktopPane1.setPreferredSize(new java.awt.Dimension(650, 450));
+        jDesktopPane1.setPreferredSize(new java.awt.Dimension(600, 420));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
+
+        jMenuBar1.setAlignmentX(0.0F);
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(260, 20));
 
         jMAlumno.setText("Alumno");
 
@@ -70,6 +80,11 @@ public class Grafico extends javax.swing.JInternalFrame {
         jMMateria.setText("Materia");
 
         jMIFormularioMateria.setText("Formulario de Materia");
+        jMIFormularioMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIFormularioMateriaActionPerformed(evt);
+            }
+        });
         jMMateria.add(jMIFormularioMateria);
 
         jMenuBar1.add(jMMateria);
@@ -85,6 +100,11 @@ public class Grafico extends javax.swing.JInternalFrame {
         jMAdministracion.add(jMIManejoInscripciones);
 
         jMIManipulacionNotas.setText("Manipulación de Notas");
+        jMIManipulacionNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIManipulacionNotasActionPerformed(evt);
+            }
+        });
         jMAdministracion.add(jMIManipulacionNotas);
 
         jMenuBar1.add(jMAdministracion);
@@ -92,11 +112,21 @@ public class Grafico extends javax.swing.JInternalFrame {
         jMConsultas.setText("Consultas");
 
         jMIAlumnosMateria.setText("Alumnos por Materia");
+        jMIAlumnosMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAlumnosMateriaActionPerformed(evt);
+            }
+        });
         jMConsultas.add(jMIAlumnosMateria);
 
         jMenuBar1.add(jMConsultas);
 
         jMSalir.setText("Salir");
+        jMSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMSalirActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMSalir);
 
         setJMenuBar(jMenuBar1);
@@ -105,24 +135,90 @@ public class Grafico extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMIFormulaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIFormulaAlumnoActionPerformed
-        // TODO add your handling code here:
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        GestionDeAlumnos gestionAlumno = new GestionDeAlumnos();
+        gestionAlumno.setVisible(true);
+        jDesktopPane1.add(gestionAlumno);
     }//GEN-LAST:event_jMIFormulaAlumnoActionPerformed
 
     private void jMIManejoInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIManejoInscripcionesActionPerformed
-        // TODO add your handling code here:
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        Inscripciones inscripcion = new Inscripciones();
+        inscripcion.setVisible(true);
+        jDesktopPane1.add(inscripcion);
     }//GEN-LAST:event_jMIManejoInscripcionesActionPerformed
 
+    private void jMIFormularioMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIFormularioMateriaActionPerformed
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        GestionDeMaterias gestionMateria = new GestionDeMaterias();
+        gestionMateria.setVisible(true);
+        jDesktopPane1.add(gestionMateria);
+    }//GEN-LAST:event_jMIFormularioMateriaActionPerformed
+
+    private void jMIManipulacionNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIManipulacionNotasActionPerformed
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        ActualizacionDeNotas actuNotas = new ActualizacionDeNotas();
+        actuNotas.setVisible(true);
+        jDesktopPane1.add(actuNotas);
+    }//GEN-LAST:event_jMIManipulacionNotasActionPerformed
+
+    private void jMIAlumnosMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAlumnosMateriaActionPerformed
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        ConsultaDeAlumnosPorMateria consulAlum = new ConsultaDeAlumnosPorMateria();
+        consulAlum.setVisible(true);
+        jDesktopPane1.add(consulAlum);
+    }//GEN-LAST:event_jMIAlumnosMateriaActionPerformed
+
+    private void jMSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMSalirActionPerformed
+        System.exit(WIDTH);
+    }//GEN-LAST:event_jMSalirActionPerformed
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Grafico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Grafico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Grafico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Grafico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Grafico().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
