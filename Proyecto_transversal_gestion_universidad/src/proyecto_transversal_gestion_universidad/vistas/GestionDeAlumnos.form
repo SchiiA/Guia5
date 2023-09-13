@@ -175,6 +175,12 @@
     <Component class="javax.swing.JRadioButton" name="jRBEstado">
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jDCFechaNacimiento">
+      <Properties>
+        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MMM-dd"/>
+      </Properties>
+      <Events>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jDCFechaNacimientoPropertyChange"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jBNuevo">
       <Properties>

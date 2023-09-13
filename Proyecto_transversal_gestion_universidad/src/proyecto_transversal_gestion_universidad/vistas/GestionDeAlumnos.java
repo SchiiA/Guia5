@@ -5,6 +5,8 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
 import proyecto_transversal_gestion_universidad.entidades.Alumno;
@@ -15,6 +17,7 @@ import proyecto_transversal_gestion_universidad.entidades.Alumno;
  */
 public class GestionDeAlumnos extends javax.swing.JInternalFrame {
     private AlumnoData alu=new AlumnoData();
+    private LocalDate fecha;
 
     /**
      * Creates new form GestionDeAlumnos
@@ -72,6 +75,13 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jBBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBBuscarActionPerformed(evt);
+            }
+        });
+
+        jDCFechaNacimiento.setDateFormatString("yyyy-MMM-dd");
+        jDCFechaNacimiento.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDCFechaNacimientoPropertyChange(evt);
             }
         });
 
@@ -178,8 +188,13 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
         // boton nuevo:
+        
         int dni=Integer.parseInt(jTDocumento.getText());
         String apellido=jTApellido.getText();
+        String nombre=jTNombre.getText();
+        boolean estado=jRBEstado.isSelected();
+        Alumno alumnoCrear=new Alumno(dni, apellido, nombre, fecha, estado);
+        alu.guardarAlumno(alumnoCrear);
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
@@ -202,6 +217,13 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             jDCFechaNacimiento.setDate(java.sql.Date.valueOf(alumnoBuscado.getFechaNacimiento()));
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jDCFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDCFechaNacimientoPropertyChange
+        // calendario:
+        if(jDCFechaNacimiento.getDate()!=null){
+            this.fecha = jDCFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+    }//GEN-LAST:event_jDCFechaNacimientoPropertyChange
 
     /**
      * @param args the command line arguments
