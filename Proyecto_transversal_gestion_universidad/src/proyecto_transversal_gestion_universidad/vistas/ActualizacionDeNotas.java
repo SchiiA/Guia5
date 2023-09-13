@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package santiago;
+package proyecto_transversal_gestion_universidad.vistas;
 
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
