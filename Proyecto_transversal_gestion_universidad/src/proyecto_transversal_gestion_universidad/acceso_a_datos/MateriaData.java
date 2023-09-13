@@ -20,118 +20,119 @@ import proyecto_transversal_gestion_universidad.entidades.Materia;
  */
 public class MateriaData {
 
- private Connection con=null;
-    public static ArrayList <Materia> listaMateria = new ArrayList<>();
-    
-    public MateriaData(){
-    this.con = Conexion.getConexion();
+    private Connection con = null;
+    public static ArrayList<Materia> listaMateria = new ArrayList<>();
+
+    public MateriaData() {
+        this.con = Conexion.getConexion();
     }
 
-    public void guardarMateria(Materia mat){
-        String sql="INSERT INTO materia(nombre,anio,estado) VALUES (?,?,?)";
+    public void guardarMateria(Materia mat) {
+        String sql = "INSERT INTO materia(nombre,año,estado) VALUES (?,?,?)";
         try {
-            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, mat.getNombre());
-                ps.setInt(2, mat.getAño());
-                ps.setBoolean(3,mat.isEstado());
-                ps.executeUpdate();
-                
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, mat.getNombre());
+            ps.setInt(2, mat.getAño());
+            ps.setBoolean(3, mat.isEstado());
+            ps.executeUpdate();
+
             ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
+            if (rs.next()) {
                 mat.setIdMateria(rs.getInt(1));
-            }else{
-                JOptionPane.showMessageDialog(null,"No se pudo tener el ID...");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo tener el ID...");
             }
             ps.close();
-            JOptionPane.showMessageDialog(null,"Guardado!");
+            JOptionPane.showMessageDialog(null, "Guardado!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error de conexion... "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
         }
     }
-    public void modificarMateria(Materia mat){
-        String query="UPDATE materia SET nombre=?,anio=? ,estado=?"
+
+    public void modificarMateria(Materia mat) {
+        String query = "UPDATE materia SET nombre=?,año=? ,estado=?"
                 + "where idMateria=?";
         try {
-            PreparedStatement ps= con.prepareStatement(query);
-               ps.setString(1, mat.getNombre());
-                ps.setInt(2, mat.getAño());
-                ps.setBoolean(3,mat.isEstado());
-                ps.executeUpdate();
-                int exito=ps.executeUpdate();
-                if(exito==1){
-                    JOptionPane.showMessageDialog(null, "materia Modificada");
-                }
-                ps.close();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, mat.getNombre());
+            ps.setInt(2, mat.getAño());
+            ps.setBoolean(3, mat.isEstado());
+            ps.executeUpdate();
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "materia Modificada");
+            }
+            ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error de conexion... "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
         }
     }
-    public void eliminarMateria(int id){
-        String SQL="UPDATE materia SET estado=0"
+
+    public void eliminarMateria(int id) {
+        String SQL = "UPDATE materia SET estado=0"
                 + "where idMateria=?";
         try {
-            PreparedStatement ps= con.prepareStatement(SQL);
-                ps.setInt(1,id);
-                ps.executeUpdate();
-                int exito=ps.executeUpdate();
-                if(exito==1){
-                    JOptionPane.showMessageDialog(null, "materia eliminada");
-                }
-                ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error de conexion... "+ex.getMessage());
-        }        
-    }
-    public  Materia buscarMateria(int id){
-        String sql="SELECT nombre,año,estado FROM materia WHERE idMateria =? AND estado = 1";
-        Materia materia=null;
-        try {
-            PreparedStatement ps= con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                materia= new Materia();
+            ps.executeUpdate();
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "materia eliminada");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
+        }
+    }
+
+    public Materia buscarMateria(int id) {
+        String sql = "SELECT nombre,año,estado FROM materia WHERE idMateria =? AND estado = 1";
+        Materia materia = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                materia = new Materia();
                 materia.setIdMateria(id);
                 materia.setNombre(rs.getString("nombre"));
                 materia.setAnio(rs.getInt("año"));
                 materia.setEstado(true);
-            
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(null, "no existe la materia");
             }
             ps.close();
-            
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla materia");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
         }
-        return materia;      
+        return materia;
     }
+    
 
-    public Iterable<Materia> buscarMateria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     public Materia buscarMateriaPorNombre(String nombre) {
-    String sql = "SELECT idMateria, anio, estado FROM materia WHERE nombre = ? AND estado = 1";
-    Materia materia = null;
+        String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1";
+        Materia materia = null;
 
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setString(1, nombre);
-        ResultSet rs = ps.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            materia = new Materia();
-            materia.setIdMateria(rs.getInt("idMateria"));
-            materia.setNombre(nombre);
-            materia.setAnio(rs.getInt("anio"));
-            materia.setEstado(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró una materia con ese nombre.");
+            if (rs.next()) {
+                materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(nombre);
+                materia.setAnio(rs.getInt("año"));
+                materia.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró una materia con ese nombre.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia: " + ex.getMessage());
         }
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia: " + ex.getMessage());
-    }
 
-    return materia;
-}
+        return materia;
+    }
 }
