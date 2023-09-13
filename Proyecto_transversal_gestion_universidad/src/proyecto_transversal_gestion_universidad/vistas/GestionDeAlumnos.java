@@ -16,7 +16,8 @@ import proyecto_transversal_gestion_universidad.entidades.Alumno;
  * @author User
  */
 public class GestionDeAlumnos extends javax.swing.JInternalFrame {
-    private AlumnoData alu=new AlumnoData();
+
+    private AlumnoData alu = new AlumnoData();
     private LocalDate fecha;
 
     /**
@@ -188,13 +189,36 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
         // boton nuevo:
-        
-        int dni=Integer.parseInt(jTDocumento.getText());
-        String apellido=jTApellido.getText();
-        String nombre=jTNombre.getText();
-        boolean estado=jRBEstado.isSelected();
-        Alumno alumnoCrear=new Alumno(dni, apellido, nombre, fecha, estado);
-        alu.guardarAlumno(alumnoCrear);
+        try {
+            int dni = Integer.parseInt(jTDocumento.getText());
+            String apellido = jTApellido.getText();
+            String nombre = jTNombre.getText();
+            boolean estado = jRBEstado.isSelected();
+            
+            //verificaciones por medio de if
+            if(apellido.isEmpty() || nombre.isEmpty() || fecha==null){
+                JOptionPane.showMessageDialog(null, "No debe tener espacios vacios");
+                return;
+            }
+            if(estado==false){
+                JOptionPane.showMessageDialog(null, "El estado no debe estar desactivado al ingresar un usuario");
+                return;
+            }
+            
+            //creacion de alumno
+            Alumno alumnoCrear = new Alumno(dni, apellido, nombre, fecha, estado);
+            //guardar alumno creado en la base de datos
+            alu.guardarAlumno(alumnoCrear);
+            //limpiado de campos de la interfaz
+            jTDocumento.setText("");
+            jTApellido.setText("");
+            jTNombre.setText("");
+            jRBEstado.setSelected(false);
+            jDCFechaNacimiento.setDate(null);
+            
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "El dni es un campo numerico");
+        }
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
@@ -203,14 +227,14 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // boton buscar:
-        int dni=Integer.parseInt(jTDocumento.getText());
-        Alumno alumnoBuscado=alu.buscarAlumnoPorDni(dni);
+        int dni = Integer.parseInt(jTDocumento.getText());
+        Alumno alumnoBuscado = alu.buscarAlumnoPorDni(dni);
         jBNuevo.setEnabled(false);
         jBEliminar.setEnabled(true);
         jBGuardar.setEnabled(true);
-        if(alumnoBuscado==null){
+        if (alumnoBuscado == null) {
             JOptionPane.showMessageDialog(null, "Alumno no inscripto en la base de datos");
-        }else{
+        } else {
             jTApellido.setText(alumnoBuscado.getApellido());
             jTNombre.setText(alumnoBuscado.getNombre());
             jRBEstado.setSelected(alumnoBuscado.isEstado());
@@ -220,7 +244,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
     private void jDCFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDCFechaNacimientoPropertyChange
         // calendario:
-        if(jDCFechaNacimiento.getDate()!=null){
+        if (jDCFechaNacimiento.getDate() != null) {
             this.fecha = jDCFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
     }//GEN-LAST:event_jDCFechaNacimientoPropertyChange
