@@ -24,8 +24,8 @@ import proyecto_transversal_gestion_universidad.entidades.Materia;
  */
 public class InscripcionData {
     private Connection con;
-    private MateriaData matData;
-    private AlumnoData aluData;
+    private MateriaData matData=new MateriaData();
+    private AlumnoData aluData=new AlumnoData();
 
     public InscripcionData() {
         con=Conexion.getConection();

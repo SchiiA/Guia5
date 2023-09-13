@@ -5,11 +5,16 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import javax.swing.JOptionPane;
+import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
+import proyecto_transversal_gestion_universidad.entidades.Alumno;
+
 /**
  *
  * @author User
  */
 public class GestionDeAlumnos extends javax.swing.JInternalFrame {
+    private AlumnoData alu=new AlumnoData();
 
     /**
      * Creates new form GestionDeAlumnos
@@ -191,7 +196,19 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // boton buscar:
-        
+        int dni=Integer.parseInt(jTDocumento.getText());
+        Alumno alumnoBuscado=alu.buscarAlumnoPorDni(dni);
+        jBNuevo.setEnabled(false);
+        jBEliminar.setEnabled(true);
+        jBGuardar.setEnabled(true);
+        if(alumnoBuscado==null){
+            JOptionPane.showMessageDialog(null, "Alumno no inscripto en la base de datos");
+        }else{
+            jTApellido.setText(alumnoBuscado.getApellido());
+            jTNombre.setText(alumnoBuscado.getNombre());
+            jRBEstado.setSelected(alumnoBuscado.isEstado());
+            jDCFechaNacimiento.setDate(java.sql.Date.valueOf(alumnoBuscado.getFechaNacimiento()));
+        }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     /**

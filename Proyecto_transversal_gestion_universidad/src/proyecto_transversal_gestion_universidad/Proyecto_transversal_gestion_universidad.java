@@ -6,6 +6,7 @@
 package proyecto_transversal_gestion_universidad;
 
 import java.sql.Connection;
+import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.Conexion;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
@@ -15,14 +16,14 @@ public class Proyecto_transversal_gestion_universidad {
 
     
     public static void main(String[] args) {
-   
-        MateriaData mat=new MateriaData();
-        for (Materia materia:mat.buscarMateria()){
-            System.out.println(materia.getAño());
-            System.out.println(materia.getClass());
-        
-        }
-        
+//   
+//        MateriaData mat=new MateriaData();
+//        for (Materia materia:mat.buscarMateria()){
+//            System.out.println(materia.getAño());
+//            System.out.println(materia.getClass());
+//        }
+        AlumnoData alu=new AlumnoData();
+        System.out.println(alu.buscarAlumnoPorDni(43890576));
     }
     
 }
