@@ -51,7 +51,7 @@ public class AlumnoData {
         }
     }
 
-    public void modificarAlumnoExistenteOff(Alumno alumno) {
+    private void modificarAlumnoExistenteOff(Alumno alumno) {
 
         String sql = "UPDATE alumno SET apellido= ?,nombre= ?,fechaNacimiento= ?, estado=true WHERE dni= ? and estado=false ";
 
@@ -143,7 +143,7 @@ public class AlumnoData {
         return alumno;
     }
     
-    public Alumno buscarAlumnoPorDni2(int dni) {
+    private Alumno buscarAlumnoPorDni2(int dni) {
         String sql = "SELECT * FROM alumno WHERE dni= ?";
         Alumno alumno = null;
         try {
