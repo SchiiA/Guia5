@@ -103,6 +103,11 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
         jBGuardar.setText("Guardar");
         jBGuardar.setEnabled(false);
+        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGuardarActionPerformed(evt);
+            }
+        });
 
         jBSalir.setText("Salir");
         jBSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -267,6 +272,25 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jBEliminar.setEnabled(false);
         jBGuardar.setEnabled(false);
     }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+       
+        if(jTApellido.getText().isEmpty() ||
+           jTNombre.getText().isEmpty() ||
+           fecha == null){
+            JOptionPane.showMessageDialog(this, "No se pueden dejar campos vacíos");
+            return;
+        }
+        
+        try{
+            int dni = Integer.parseInt(jTDocumento.getText());
+            Alumno alumno = new Alumno(dni, jTApellido.getText(), jTNombre.getText(), fecha, jRBEstado.isSelected());
+            alu.modificarAlumno(alumno);
+        } catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(this, "El Documento no corresponde a un dato numérico");
+        }
+//        Alumno alum = new Alumno(jTDocumento.getText(), title, title, fecha, isIcon);
+    }//GEN-LAST:event_jBGuardarActionPerformed
 
     /**
      * @param args the command line arguments
