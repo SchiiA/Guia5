@@ -23,7 +23,7 @@ public class Proyecto_transversal_gestion_universidad {
 //            System.out.println(materia.getClass());
 //        }
         AlumnoData alu=new AlumnoData();
-        System.out.println(alu.buscarAlumnoPorDni(43890576));
+        System.out.println(alu.buscarAlumnoPorDni2(123));
     }
     
 }

@@ -23,31 +23,53 @@ public class AlumnoData {
     }
 
     public void guardarAlumno(Alumno alumno) {
+        if (buscarAlumnoPorDni2(alumno.getDni()) == null) {
+            String sql = "Insert into alumno (dni,apellido,nombre,fechaNacimiento,estado)" + "values (?,?,?,?,?)";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, alumno.getDni());
+                ps.setString(2, alumno.getApellido());
+                ps.setString(3, alumno.getNombre());
+                ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
+                ps.setBoolean(5, alumno.isEstado());
+                ps.executeUpdate();
 
-        String sql = "Insert into alumno (dni,apellido,nombre,fechaNacimiento,estado)" + "values (?,?,?,?,?)";
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+
+                    alumno.setIdAlumno(rs.getInt(1));
+
+                    JOptionPane.showMessageDialog(null, "Alumno Guardado");
+
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+            }
+        } else{
+            modificarAlumnoExistenteOff(alumno);
+        }
+    }
+
+    public void modificarAlumnoExistenteOff(Alumno alumno) {
+
+        String sql = "UPDATE alumno SET apellido= ?,nombre= ?,fechaNacimiento= ?, estado=true"  + "WHERE dni= ? ";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, alumno.getDni());
-            ps.setString(2, alumno.getApellido());
-            ps.setString(3, alumno.getNombre());
-            ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
-            ps.setBoolean(5, alumno.isEstado());
-            ps.executeUpdate();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, alumno.getApellido());
+            ps.setString(2, alumno.getNombre());
+            ps.setDate(3, Date.valueOf(alumno.getFechaNacimiento()));
+            ps.setInt(4, alumno.getDni());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
 
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-
-                alumno.setIdAlumno(rs.getInt(1));
-
-                JOptionPane.showMessageDialog(null, "Alumno Guardado");
-
+                JOptionPane.showMessageDialog(null, "alumno Guardado");
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla alumno");
         }
-
     }
 
     public void modificarAlumno(Alumno alumno) {
@@ -56,7 +78,7 @@ public class AlumnoData {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(2, alumno.getDni());
+            ps.setInt(1, alumno.getDni());
             ps.setString(2, alumno.getApellido());
             ps.setString(3, alumno.getNombre());
             ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
@@ -72,13 +94,13 @@ public class AlumnoData {
         }
     }
 
-    public void eliminarAlumno(int id) {
+    public void eliminarAlumno(int dni) {
 
-        String sql = "UPDATE alumno SET estado =0 WHERE idAlumno= ?";
+        String sql = "UPDATE alumno SET estado =0 WHERE dni= ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, dni);
             int exito = ps.executeUpdate();
             if (exito == 1) {
 
@@ -118,6 +140,33 @@ public class AlumnoData {
         List<Alumno> alumno = null;
         return alumno;
     }
+    
+    public Alumno buscarAlumnoPorDni2(int dni) {
+        String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ?";
+        Alumno alumno = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                alumno = new Alumno();
+                alumno.setIdAlumno(rs.getInt("idALumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+            }
+//            else{
+//            
+//            JOptionPane.showMessageDialog(null,"no existe ese alumno");
+//            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alumno;
+    }
+    
 
     public Alumno buscarAlumnoPorDni(int dni) {
         String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ? AND estado= 1";
@@ -172,10 +221,6 @@ public class AlumnoData {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alumno;
-    }
-
-    public Iterable<Materia> buscarAlumnoPorDni() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -95,6 +95,11 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
         jBEliminar.setText("Eliminar");
         jBEliminar.setEnabled(false);
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jBGuardar.setText("Guardar");
         jBGuardar.setEnabled(false);
@@ -194,17 +199,17 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             String apellido = jTApellido.getText();
             String nombre = jTNombre.getText();
             boolean estado = jRBEstado.isSelected();
-            
+
             //verificaciones por medio de if
-            if(apellido.isEmpty() || nombre.isEmpty() || fecha==null){
+            if (apellido.isEmpty() || nombre.isEmpty() || fecha == null) {
                 JOptionPane.showMessageDialog(null, "No debe tener espacios vacios");
                 return;
             }
-            if(estado==false){
+            if (estado == false) {
                 JOptionPane.showMessageDialog(null, "El estado no debe estar desactivado al ingresar un usuario");
                 return;
             }
-            
+
             //creacion de alumno
             Alumno alumnoCrear = new Alumno(dni, apellido, nombre, fecha, estado);
             //guardar alumno creado en la base de datos
@@ -215,7 +220,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             jTNombre.setText("");
             jRBEstado.setSelected(false);
             jDCFechaNacimiento.setDate(null);
-            
+
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "El dni es un campo numerico");
         }
@@ -248,6 +253,20 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             this.fecha = jDCFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
     }//GEN-LAST:event_jDCFechaNacimientoPropertyChange
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        // boton eliminar:
+        int dni = Integer.parseInt(jTDocumento.getText());
+        alu.eliminarAlumno(dni);
+        jTDocumento.setText("");
+        jTApellido.setText("");
+        jTNombre.setText("");
+        jRBEstado.setSelected(false);
+        jDCFechaNacimiento.setDate(null);
+        jBNuevo.setEnabled(true);
+        jBEliminar.setEnabled(false);
+        jBGuardar.setEnabled(false);
+    }//GEN-LAST:event_jBEliminarActionPerformed
 
     /**
      * @param args the command line arguments
