@@ -310,7 +310,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
         if (jTApellido.getText().isEmpty()
                 || jTNombre.getText().isEmpty()
-                || fecha == null) {
+                || jDCFechaNacimiento.getDate() == null) {
             JOptionPane.showMessageDialog(this, "No se pueden dejar campos vacíos");
             return;
         }
