@@ -6,9 +6,12 @@
 package proyecto_transversal_gestion_universidad;
 
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.Month;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.Conexion;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
+import proyecto_transversal_gestion_universidad.entidades.Alumno;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
 
 

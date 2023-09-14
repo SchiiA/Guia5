@@ -53,7 +53,7 @@ public class AlumnoData {
 
     public void modificarAlumnoExistenteOff(Alumno alumno) {
 
-        String sql = "UPDATE alumno SET apellido= ?,nombre= ?,fechaNacimiento= ?, estado=true"  + "WHERE dni= ? ";
+        String sql = "UPDATE alumno SET apellido= ?,nombre= ?,fechaNacimiento= ?, estado=true WHERE dni= ? and estado=false ";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -65,6 +65,8 @@ public class AlumnoData {
             if (exito == 1) {
 
                 JOptionPane.showMessageDialog(null, "alumno Guardado");
+            }else{
+                JOptionPane.showMessageDialog(null, "alumno ya existente");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -142,7 +144,7 @@ public class AlumnoData {
     }
     
     public Alumno buscarAlumnoPorDni2(int dni) {
-        String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ?";
+        String sql = "SELECT * FROM alumno WHERE dni= ?";
         Alumno alumno = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -155,6 +157,7 @@ public class AlumnoData {
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                alumno.setEstado(rs.getBoolean("estado"));
             }
 //            else{
 //            
