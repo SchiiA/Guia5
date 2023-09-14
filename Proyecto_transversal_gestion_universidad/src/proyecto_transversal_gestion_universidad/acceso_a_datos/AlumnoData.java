@@ -22,7 +22,8 @@ public class AlumnoData {
         con = Conexion.getConection();
     }
 
-    public void guardarAlumno(Alumno alumno) {
+    public boolean guardarAlumno(Alumno alumno) {
+        boolean veri=true;
         if (buscarAlumnoPorDni2(alumno.getDni()) == null) {
             String sql = "Insert into alumno (dni,apellido,nombre,fechaNacimiento,estado)" + "values (?,?,?,?,?)";
             try {
@@ -40,6 +41,7 @@ public class AlumnoData {
                     alumno.setIdAlumno(rs.getInt(1));
 
                     JOptionPane.showMessageDialog(null, "Alumno Guardado");
+                    veri=true;
 
                 }
                 ps.close();
@@ -47,12 +49,13 @@ public class AlumnoData {
                 JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
             }
         } else{
-            modificarAlumnoExistenteOff(alumno);
+            veri= modificarAlumnoExistenteOff(alumno);
         }
+        return veri;
     }
 
-    private void modificarAlumnoExistenteOff(Alumno alumno) {
-
+    private boolean modificarAlumnoExistenteOff(Alumno alumno) {
+        boolean veri=false;
         String sql = "UPDATE alumno SET apellido= ?,nombre= ?,fechaNacimiento= ?, estado=true WHERE dni= ? and estado=false ";
 
         try {
@@ -65,13 +68,16 @@ public class AlumnoData {
             if (exito == 1) {
 
                 JOptionPane.showMessageDialog(null, "alumno Guardado");
+                veri=true;
             }else{
                 JOptionPane.showMessageDialog(null, "alumno ya existente");
+                veri=false;
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error al acceder a la tabla alumno");
         }
+        return veri;
     }
 
     public void modificarAlumno(Alumno alumno) {
