@@ -237,19 +237,25 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // boton buscar:
-        int dni = Integer.parseInt(jTDocumento.getText());
-        Alumno alumnoBuscado = alu.buscarAlumnoPorDni(dni);
-        jBNuevo.setEnabled(false);
-        jBEliminar.setEnabled(true);
-        jBGuardar.setEnabled(true);
-        if (alumnoBuscado == null) {
-            JOptionPane.showMessageDialog(null, "Alumno no inscripto en la base de datos");
-        } else {
-            jTApellido.setText(alumnoBuscado.getApellido());
-            jTNombre.setText(alumnoBuscado.getNombre());
-            jRBEstado.setSelected(alumnoBuscado.isEstado());
-            jDCFechaNacimiento.setDate(java.sql.Date.valueOf(alumnoBuscado.getFechaNacimiento()));
+        try {
+            int dni = Integer.parseInt(jTDocumento.getText());
+            Alumno alumnoBuscado = alu.buscarAlumnoPorDni(dni);
+            if (alumnoBuscado == null) {
+                JOptionPane.showMessageDialog(null, "Alumno no inscripto en la base de datos");
+                return;
+            } else {
+                jTApellido.setText(alumnoBuscado.getApellido());
+                jTNombre.setText(alumnoBuscado.getNombre());
+                jRBEstado.setSelected(alumnoBuscado.isEstado());
+                jDCFechaNacimiento.setDate(java.sql.Date.valueOf(alumnoBuscado.getFechaNacimiento()));
+                jBNuevo.setEnabled(false);
+                jBEliminar.setEnabled(true);
+                jBGuardar.setEnabled(true);
+            }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "la busqueda por dni requiere que dni sea dato numerico");
         }
+
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jDCFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDCFechaNacimientoPropertyChange
@@ -274,19 +280,19 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
-       
-        if(jTApellido.getText().isEmpty() ||
-           jTNombre.getText().isEmpty() ||
-           fecha == null){
+
+        if (jTApellido.getText().isEmpty()
+                || jTNombre.getText().isEmpty()
+                || fecha == null) {
             JOptionPane.showMessageDialog(this, "No se pueden dejar campos vacíos");
             return;
         }
-        
-        try{
+
+        try {
             int dni = Integer.parseInt(jTDocumento.getText());
             Alumno alumno = new Alumno(dni, jTApellido.getText(), jTNombre.getText(), fecha, jRBEstado.isSelected());
             alu.modificarAlumno(alumno);
-        } catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El Documento no corresponde a un dato numérico");
         }
 //        Alumno alum = new Alumno(jTDocumento.getText(), title, title, fecha, isIcon);
