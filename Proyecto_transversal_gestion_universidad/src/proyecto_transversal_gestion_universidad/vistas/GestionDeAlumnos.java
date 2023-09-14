@@ -218,14 +218,15 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             //creacion de alumno
             Alumno alumnoCrear = new Alumno(dni, apellido, nombre, fecha, estado);
             //guardar alumno creado en la base de datos
-            alu.guardarAlumno(alumnoCrear);
-            //limpiado de campos de la interfaz
-            jTDocumento.setText("");
-            jTApellido.setText("");
-            jTNombre.setText("");
-            jRBEstado.setSelected(false);
-            jDCFechaNacimiento.setDate(null);
 
+            //limpiado de campos de la interfaz
+            if (alu.guardarAlumno(alumnoCrear) == true) {
+                jTDocumento.setText("");
+                jTApellido.setText("");
+                jTNombre.setText("");
+                jRBEstado.setSelected(false);
+                jDCFechaNacimiento.setDate(null);
+            }
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "El dni es un campo numerico");
         }
@@ -255,7 +256,6 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "la busqueda por dni requiere que dni sea dato numerico");
         }
-
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jDCFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDCFechaNacimientoPropertyChange
@@ -287,15 +287,21 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se pueden dejar campos vacíos");
             return;
         }
-
         try {
             int dni = Integer.parseInt(jTDocumento.getText());
             Alumno alumno = new Alumno(dni, jTApellido.getText(), jTNombre.getText(), fecha, jRBEstado.isSelected());
             alu.modificarAlumno(alumno);
+            jTDocumento.setText("");
+            jTApellido.setText("");
+            jTNombre.setText("");
+            jRBEstado.setSelected(false);
+            jDCFechaNacimiento.setDate(null);
+            jBNuevo.setEnabled(true);
+            jBEliminar.setEnabled(false);
+            jBGuardar.setEnabled(false);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El Documento no corresponde a un dato numérico");
         }
-//        Alumno alum = new Alumno(jTDocumento.getText(), title, title, fecha, isIcon);
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     /**
