@@ -242,9 +242,8 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             
             //creacion de alumno
             Alumno alumnoCrear = new Alumno(dni, apellido, nombre, fecha, estado);
-            //guardar alumno creado en la base de datos
-
-            //limpiado de campos de la interfaz
+            //guardar alumno creado en la base de datos y limpiado de campos de la interfaz
+            //si el alumno fue guardado
             if (alu.guardarAlumno(alumnoCrear) == true) {
                 jTDocumento.setText("");
                 jTApellido.setText("");

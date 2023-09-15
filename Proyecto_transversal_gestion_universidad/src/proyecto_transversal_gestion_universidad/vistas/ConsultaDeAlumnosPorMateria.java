@@ -43,8 +43,6 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Seleccione una Materia");
 
-        jCBMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jTAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
