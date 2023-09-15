@@ -27,6 +27,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jCBAlumno = new javax.swing.JComboBox<>();
@@ -51,6 +52,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
 
         jCBAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        buttonGroup2.add(jRadioButton2);
         jRadioButton2.setText("Materias no Inscriptas");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,6 +60,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             }
         });
 
+        buttonGroup2.add(jRadioButton1);
         jRadioButton1.setText("Materias Inscriptas");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +176,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jBAnularInscripcion;
     private javax.swing.JButton jBInscribir;
     private javax.swing.JButton jBSalir;
