@@ -70,7 +70,7 @@ public class AlumnoData {
                 JOptionPane.showMessageDialog(null, "alumno Guardado");
                 veri=true;
             }else{
-                JOptionPane.showMessageDialog(null, "alumno ya existente");
+                JOptionPane.showMessageDialog(null, "alumno ya existente, intente buscarlo por su dni");
                 veri=false;
             }
             ps.close();
@@ -137,7 +137,7 @@ public class AlumnoData {
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alumno.setActivo(true);
+                alumno.setEstado(true);
                 alumnos.add(alumno);
 
             }
@@ -219,7 +219,7 @@ public class AlumnoData {
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alumno.setActivo(true);
+                alumno.setEstado(true);
 
             } else {
 

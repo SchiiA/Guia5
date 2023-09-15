@@ -223,7 +223,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
         // boton nuevo:
         try {
-            
+
             String apellido = jTApellido.getText();
             String nombre = jTNombre.getText();
             boolean estado = jRBEstado.isSelected();
@@ -237,9 +237,9 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "El estado no debe estar desactivado al ingresar un usuario");
                 return;
             }
-            
+
             int dni = Integer.parseInt(jTDocumento.getText());
-            
+
             //creacion de alumno
             Alumno alumnoCrear = new Alumno(dni, apellido, nombre, fecha, estado);
             //guardar alumno creado en la base de datos y limpiado de campos de la interfaz
@@ -252,8 +252,8 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                 jDCFechaNacimiento.setDate(null);
             }
         } catch (NumberFormatException nfe) {
-            if(!jTDocumento.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "El dni es un campo numerico");
+            if (!jTDocumento.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El dni es un campo numerico");
             }
         }
     }//GEN-LAST:event_jBNuevoActionPerformed
@@ -306,7 +306,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
-
+        //boton guardar
         if (jTApellido.getText().isEmpty()
                 || jTNombre.getText().isEmpty()
                 || jDCFechaNacimiento.getDate() == null) {

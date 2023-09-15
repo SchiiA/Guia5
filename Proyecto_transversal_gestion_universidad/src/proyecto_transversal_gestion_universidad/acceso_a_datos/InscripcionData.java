@@ -185,10 +185,11 @@ public class InscripcionData {
         }
     }
     
-    public ArrayList<Alumno> obtenerAlumnosXMateria(int idMateria){
+    public ArrayList<Alumno> obtenerAlumnosXMateria(String nombre){
         ArrayList<Alumno> alumnos=new ArrayList<>();
         Alumno alumno=null;
-        String sql="select al.idAlumno,apellido,nombre,dni from alumno al join inscripcion in on(in.idAlumno=al.idAlumno) where idMateria=? and al.estado=1";
+        int idMateria=matData.buscarMateriaPorNombre(nombre).getIdMateria();
+        String sql="select al.idAlumno,apellido,nombre,dni,fechaNacimiento from inscripcion ins join alumno al on(ins.idAlumno=al.idAlumno) where idMateria=? and al.estado=1";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1, idMateria);

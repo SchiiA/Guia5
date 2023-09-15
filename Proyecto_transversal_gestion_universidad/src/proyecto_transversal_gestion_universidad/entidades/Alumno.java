@@ -99,9 +99,4 @@ public class Alumno {
         return idAlumno + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + ",estado="+ estado;
     }
     
-    //comentario de prueba
-
-    public void setActivo(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
