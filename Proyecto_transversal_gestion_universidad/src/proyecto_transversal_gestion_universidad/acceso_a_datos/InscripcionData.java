@@ -60,6 +60,7 @@ public class InscripcionData {
             PreparedStatement ps=con.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
+                ins=new Inscripcion();
                 ins.setIdInscripto(rs.getInt("idInscripcion"));
                 ins.setNota(rs.getDouble("nota"));
                 int idAlumno=(rs.getInt("idAlumno"));
@@ -86,6 +87,7 @@ public class InscripcionData {
             ps.setInt(1, idAlumno);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
+                ins=new Inscripcion();
                 Alumno alumno=aluData.buscarAlumnoPorId(idAlumno);
                 ins.setAlumno(alumno);
                 ins.setIdInscripto(rs.getInt("idInscripcion"));
@@ -112,9 +114,10 @@ public class InscripcionData {
             ps.setInt(2, idAlumno);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
+                materia=new Materia();
                 materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
-                materia.setAño(rs.getInt("año"));
+                materia.setAnio(rs.getInt("año"));
                 materia.setEstado(rs.getBoolean("estado"));
                 lista.add(materia);
             }
@@ -135,9 +138,10 @@ public class InscripcionData {
             ps.setInt(2, idAlumno);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
+                materia=new Materia();
                 materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
-                materia.setAño(rs.getInt("año"));
+                materia.setAnio(rs.getInt("año"));
                 materia.setEstado(rs.getBoolean("estado"));
                 lista.add(materia);
             }
@@ -190,6 +194,7 @@ public class InscripcionData {
             ps.setInt(1, idMateria);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
+                alumno=new Alumno();
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));

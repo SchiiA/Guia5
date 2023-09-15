@@ -5,6 +5,10 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import proyecto_transversal_gestion_universidad.acceso_a_datos.Conexion;
+
 /**
  *
  * @author User
@@ -121,4 +125,8 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTAlumnos;
     // End of variables declaration//GEN-END:variables
+
+    public void cargaComboBox(){
+        
+    }
 }

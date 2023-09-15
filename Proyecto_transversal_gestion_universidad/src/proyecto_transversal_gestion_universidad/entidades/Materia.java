@@ -12,13 +12,13 @@ package proyecto_transversal_gestion_universidad.entidades;
 public class Materia {
     private int idMateria;
     private String nombre;
-    private int año;
+    private int anio;
     private boolean estado;
 
-    public Materia(int idMateria, String nombre, int año, boolean estado) {
+    public Materia(int idMateria, String nombre, int anio, boolean estado) {
         this.idMateria = idMateria;
         this.nombre = nombre;
-        this.año = año;
+        this.anio = anio;
         this.estado = estado;
     }
 
@@ -27,7 +27,7 @@ public class Materia {
 
     public Materia(String nombre, int año, boolean estado) {
         this.nombre = nombre;
-        this.año = año;
+        this.anio = año;
         this.estado = estado;
     }
 
@@ -47,12 +47,12 @@ public class Materia {
         this.nombre = nombre;
     }
 
-    public int getAño() {
-        return año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public boolean isEstado() {
@@ -63,18 +63,10 @@ public class Materia {
         this.estado = estado;
     }
 
+
     @Override
     public String toString() {
-        return "idMateria=" + idMateria + ", nombre=" + nombre + ", a\u00f1o=" + año + ", estado=" + estado;
+        return "idMateria=" + idMateria + ", nombre=" + nombre + ", a\u00f1o=" + anio + ", estado=" + estado;
     }
 
-    public int getAnio() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setAnio(int aInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
 }

@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
 
@@ -24,7 +26,7 @@ public class MateriaData {
     public static ArrayList<Materia> listaMateria = new ArrayList<>();
 
     public MateriaData() {
-        this.con = Conexion.getConexion();
+        this.con = Conexion.getConection();
     }
 
     public void guardarMateria(Materia mat) {
@@ -32,7 +34,7 @@ public class MateriaData {
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, mat.getNombre());
-            ps.setInt(2, mat.getAño());
+            ps.setInt(2, mat.getAnio());
             ps.setBoolean(3, mat.isEstado());
             ps.executeUpdate();
 
@@ -55,7 +57,7 @@ public class MateriaData {
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, mat.getNombre());
-            ps.setInt(2, mat.getAño());
+            ps.setInt(2, mat.getAnio());
             ps.setBoolean(3, mat.isEstado());
             ps.executeUpdate();
             int exito = ps.executeUpdate();
@@ -134,5 +136,27 @@ public class MateriaData {
         }
 
         return materia;
+    }
+    
+    public ArrayList<Materia> listarMaterias(){
+        ArrayList<Materia> materias=new ArrayList<>();
+        Materia materia=null;
+        String sql="select * from materia where estado=true";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                materia=new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("año"));
+                materia.setEstado(rs.getBoolean("estado"));
+                materias.add(materia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
+        }
+        return materias;
     }
 }
