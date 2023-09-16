@@ -29,7 +29,7 @@ public class Proyecto_transversal_gestion_universidad {
         MateriaData mat = new MateriaData();
         InscripcionData ins=new InscripcionData();
         //        System.out.println(alu.buscarAlumnoPorDni2(123));
-        ArrayList<Alumno> materias=new ArrayList<>(ins.obtenerAlumnosXMateria("Analisis Matemático I"));
+        ArrayList<Alumno> materias=new ArrayList<>(alu.listarAlumnos());
         for(Alumno re:materias){
             System.out.println(re);
         }

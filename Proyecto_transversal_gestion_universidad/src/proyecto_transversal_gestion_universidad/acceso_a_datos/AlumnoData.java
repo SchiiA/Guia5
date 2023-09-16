@@ -122,31 +122,26 @@ public class AlumnoData {
     }
 
     public List<Alumno> listarAlumnos() {
-        String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ? AND estado= 1";
+        String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE estado=true";
         ArrayList<Alumno> alumnos = new ArrayList<>();
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 Alumno alumno = new Alumno();
-                alumno.setIdAlumno(rs.getInt("idALumno"));
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setDni(rs.getInt("dni"));
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setEstado(true);
                 alumnos.add(alumno);
-
             }
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla alumno");
         }
-        List<Alumno> alumno = null;
-        return alumno;
+        return alumnos;
     }
     
     private Alumno buscarAlumnoPorDni2(int dni) {
