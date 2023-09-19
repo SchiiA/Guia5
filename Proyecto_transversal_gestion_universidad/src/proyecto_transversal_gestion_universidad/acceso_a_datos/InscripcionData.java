@@ -78,19 +78,19 @@ public class InscripcionData {
         return lista;
     }
     
-    public  ArrayList<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno){
+    public  ArrayList<Inscripcion> obtenerInscripcionesPorAlumno(int dni){
         ArrayList<Inscripcion> lista=new ArrayList<>();
         Inscripcion ins=null;
-        String sql="select * from inscripcion in join alumno al on (in.idAlumno=al.idAlumno) where al.estado=true and in.idAlumno=?";
+        String sql="select * from inscripcion ins join alumno al on (ins.idAlumno=al.idAlumno) where al.estado=true and al.dni=?";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
-            ps.setInt(1, idAlumno);
+            ps.setInt(1, dni);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 ins=new Inscripcion();
-                Alumno alumno=aluData.buscarAlumnoPorId(idAlumno);
+                Alumno alumno=aluData.buscarAlumnoPorDni(dni);
                 ins.setAlumno(alumno);
-                ins.setIdInscripto(rs.getInt("idInscripcion"));
+                ins.setIdInscripto(rs.getInt("idInscripto"));
                 int idMateria=rs.getInt("idMateria");
                 Materia materia=matData.buscarMateria(idMateria);
                 ins.setMateria(materia);

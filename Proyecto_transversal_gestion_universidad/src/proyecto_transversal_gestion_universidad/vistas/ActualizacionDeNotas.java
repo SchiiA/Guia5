@@ -5,33 +5,35 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
+import proyecto_transversal_gestion_universidad.acceso_a_datos.InscripcionData;
 import proyecto_transversal_gestion_universidad.entidades.Alumno;
+import proyecto_transversal_gestion_universidad.entidades.Inscripcion;
 
 /**
  *
  * @author User
  */
 public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
-
+    private double nota=0;
     private AlumnoData alumnoData = new AlumnoData();
-    private DefaultTableModel modelo = new DefaultTableModel()
-            // codigo experimental
-            //{
-            //        public boolean isCellEditable(int f, int c) {
-            //            if(c==2){
-            //                return true;
-            //            }else{
-            //                return false;
-            //            }
-            //        }
-            //    }
-            ;
+    private InscripcionData inscripcionData = new InscripcionData();
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            if (c == 2) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
 
     /**
      * Creates new form ActualizacionDeNotas
@@ -67,6 +69,7 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Seleccione un Alumno");
 
+        jCbAlumnos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
         jCbAlumnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCbAlumnosActionPerformed(evt);
@@ -84,6 +87,8 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTNotas.setDragEnabled(true);
         jScrollPane1.setViewportView(jTNotas);
 
         jBGuardar.setText("Guardar");
@@ -145,10 +150,27 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
 
     private void jCbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbAlumnosActionPerformed
         // TODO add your handling code here:
+        borrarFila();
+        String[] dni = String.valueOf(jCbAlumnos.getSelectedItem()).split(", ");
+        ArrayList<Inscripcion> inscripcions = new ArrayList<>(inscripcionData.obtenerInscripcionesPorAlumno(Integer.parseInt(dni[0])));
+        for (Inscripcion re : inscripcions) {
+            modelo.addRow(new Object[]{re.getMateria().getIdMateria(), re.getMateria().getNombre(), re.getNota()});
+        }
+
+
     }//GEN-LAST:event_jCbAlumnosActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
+        int filaS = jTNotas.getSelectedRow();
+        if (filaS != -1) {
+            if(jTNotas.getSelectedColumn()==2){
+                jTNotas.changeSelection(filaS, 2, false, false);
+                JOptionPane.showMessageDialog(null, jTNotas.getValueAt(filaS, 2));
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "debe seleccionar una fila");
+        }
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
@@ -189,4 +211,6 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
         modelo.addColumn("Nota");
         jTNotas.setModel(modelo);
     }
+    
+    
 }

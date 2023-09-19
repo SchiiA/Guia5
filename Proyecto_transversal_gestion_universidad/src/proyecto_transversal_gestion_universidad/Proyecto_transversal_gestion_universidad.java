@@ -14,6 +14,7 @@ import proyecto_transversal_gestion_universidad.acceso_a_datos.Conexion;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.InscripcionData;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
 import proyecto_transversal_gestion_universidad.entidades.Alumno;
+import proyecto_transversal_gestion_universidad.entidades.Inscripcion;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
 
 public class Proyecto_transversal_gestion_universidad {
@@ -29,10 +30,12 @@ public class Proyecto_transversal_gestion_universidad {
         MateriaData mat = new MateriaData();
         InscripcionData ins=new InscripcionData();
         //        System.out.println(alu.buscarAlumnoPorDni2(123));
-        ArrayList<Alumno> materias=new ArrayList<>(alu.listarAlumnos());
-        for(Alumno re:materias){
+        ArrayList<Inscripcion> materias=new ArrayList<>(ins.obtenerInscripcionesPorAlumno(123));
+        for(Inscripcion re:materias){
             System.out.println(re);
         }
+//System.out.println(alu.buscarAlumnoPorDni(123));
+//System.out.println(mat.buscarMateria(79));
     }
 
 }
