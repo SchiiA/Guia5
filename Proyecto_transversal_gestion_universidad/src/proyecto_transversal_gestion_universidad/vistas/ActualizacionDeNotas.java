@@ -8,6 +8,7 @@ package proyecto_transversal_gestion_universidad.vistas;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,7 +23,8 @@ import proyecto_transversal_gestion_universidad.entidades.Inscripcion;
  * @author User
  */
 public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
-    private double nota=0;
+
+    private double nota;
     private AlumnoData alumnoData = new AlumnoData();
     private InscripcionData inscripcionData = new InscripcionData();
     private DefaultTableModel modelo = new DefaultTableModel() {
@@ -87,6 +89,7 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTNotas.setToolTipText("");
         jTNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTNotas.setDragEnabled(true);
         jScrollPane1.setViewportView(jTNotas);
@@ -164,14 +167,23 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int filaS = jTNotas.getSelectedRow();
         if (filaS != -1) {
-            if(jTNotas.getSelectedColumn()==2){
-                jTNotas.changeSelection(filaS, 2, false, false);
-                JOptionPane.showMessageDialog(null, jTNotas.getValueAt(filaS, 2));
+            nota = Double.valueOf(jTNotas.getValueAt(filaS, 2).toString());
+            if (jTNotas.getSelectedColumn() == 2) {
+                if (verif(filaS, nota) == true || nota<1 || nota>10) {
+                    if(nota<1 || nota>10){
+                        JOptionPane.showMessageDialog(null, "la nota debe estar entre el rango 1 al 10");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "debe dar un enter para poder guardar la nueva nota");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, nota);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "debe seleccionar una fila");
         }
     }//GEN-LAST:event_jBGuardarActionPerformed
+
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         this.dispose();
@@ -211,6 +223,21 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
         modelo.addColumn("Nota");
         jTNotas.setModel(modelo);
     }
-    
-    
+
+    private boolean verif(int fila, double nota) {
+        String[] dni = String.valueOf(jCbAlumnos.getSelectedItem()).split(", ");
+        ArrayList<Inscripcion> inscripcions = new ArrayList<>(inscripcionData.obtenerInscripcionesPorAlumno(Integer.parseInt(dni[0])));
+        double vector[] = new double[inscripcions.size()];
+        int cont = 0;
+        //vector que guarda notas desde base de datos
+        for (Inscripcion re : inscripcions) {
+            vector[cont] = re.getNota();
+            cont++;
+        }
+        if (vector[fila] == nota) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
