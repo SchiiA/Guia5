@@ -5,6 +5,8 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -167,15 +169,26 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int filaS = jTNotas.getSelectedRow();
         if (filaS != -1) {
+
+            /*experimentar-buscar info:
+            
+            try {
+                Robot robot=new Robot();
+                robot.keyPress(KeyEvent.VK_ENTER);
+            } catch (AWTException ex) {
+                Logger.getLogger(ActualizacionDeNotas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             */
+            //probado:
             nota = Double.valueOf(jTNotas.getValueAt(filaS, 2).toString());
             if (jTNotas.getSelectedColumn() == 2) {
-                if (verif(filaS, nota) == true || nota<1 || nota>10) {
-                    if(nota<1 || nota>10){
+                if (verif(filaS, nota) == true || nota < 1 || nota > 10) {
+                    if (nota < 1 || nota > 10) {
                         JOptionPane.showMessageDialog(null, "la nota debe estar entre el rango 1 al 10");
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "debe dar un enter para poder guardar la nueva nota");
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, nota);
                 }
             }
