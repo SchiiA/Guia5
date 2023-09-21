@@ -161,8 +161,6 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
         for (Inscripcion re : inscripcions) {
             modelo.addRow(new Object[]{re.getMateria().getIdMateria(), re.getMateria().getNombre(), re.getNota()});
         }
-
-
     }//GEN-LAST:event_jCbAlumnosActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
@@ -189,7 +187,10 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(null, "debe dar un enter para poder guardar la nueva nota");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, nota);
+                    String[] dni = String.valueOf(jCbAlumnos.getSelectedItem()).split(", ");
+                    int idAlumno=alumnoData.buscarAlumnoPorDni(Integer.valueOf(dni[0])).getIdAlumno();
+                    int idMateria=(int) jTNotas.getValueAt(filaS, 0);
+                    inscripcionData.actualizarNota(idAlumno, idMateria, nota);
                 }
             }
         } else {

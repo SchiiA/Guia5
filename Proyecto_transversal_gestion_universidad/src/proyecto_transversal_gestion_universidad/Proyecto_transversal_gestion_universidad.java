@@ -30,11 +30,11 @@ public class Proyecto_transversal_gestion_universidad {
         MateriaData mat = new MateriaData();
         InscripcionData ins=new InscripcionData();
         //        System.out.println(alu.buscarAlumnoPorDni2(123));
-        ArrayList<Inscripcion> materias=new ArrayList<>(ins.obtenerInscripcionesPorAlumno(123));
-        for(Inscripcion re:materias){
-            System.out.println(re);
-        }
-//System.out.println(alu.buscarAlumnoPorDni(123));
+//        ArrayList<Inscripcion> materias=new ArrayList<>(ins.obtenerInscripcionesPorAlumno(123));
+//        for(Inscripcion re:materias){
+//            System.out.println(re);
+//        }
+System.out.println(alu.buscarAlumnoPorDni(123));
 //System.out.println(mat.buscarMateria(79));
     }
 

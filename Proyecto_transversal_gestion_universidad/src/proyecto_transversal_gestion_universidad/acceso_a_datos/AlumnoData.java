@@ -24,7 +24,7 @@ public class AlumnoData {
 
     public boolean guardarAlumno(Alumno alumno) {
         boolean veri=true;
-        if (buscarAlumnoPorDni2(alumno.getDni()) == null) {
+        if (buscarAlumnoPorDni(alumno.getDni()) == null) {
             String sql = "Insert into alumno (dni,apellido,nombre,fechaNacimiento,estado)" + "values (?,?,?,?,?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -144,32 +144,28 @@ public class AlumnoData {
         return alumnos;
     }
     
-    private Alumno buscarAlumnoPorDni2(int dni) {
-        String sql = "SELECT * FROM alumno WHERE dni= ?";
-        Alumno alumno = null;
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, dni);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                alumno = new Alumno();
-                alumno.setIdAlumno(rs.getInt("idALumno"));
-                alumno.setDni(rs.getInt("dni"));
-                alumno.setApellido(rs.getString("apellido"));
-                alumno.setNombre(rs.getString("nombre"));
-                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alumno.setEstado(rs.getBoolean("estado"));
-            }
-//            else{
-//            
-//            JOptionPane.showMessageDialog(null,"no existe ese alumno");
+//    private Alumno buscarAlumnoPorDni2(int dni) {
+//        String sql = "SELECT * FROM alumno WHERE dni= ?";
+//        Alumno alumno = null;
+//        try {
+//            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setInt(1, dni);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next()) {
+//                alumno = new Alumno();
+//                alumno.setIdAlumno(rs.getInt("idALumno"));
+//                alumno.setDni(rs.getInt("dni"));
+//                alumno.setApellido(rs.getString("apellido"));
+//                alumno.setNombre(rs.getString("nombre"));
+//                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+//                alumno.setEstado(rs.getBoolean("estado"));
 //            }
-            ps.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return alumno;
-    }
+//            ps.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return alumno;
+//    }
     
 
     public Alumno buscarAlumnoPorDni(int dni) {
@@ -189,10 +185,6 @@ public class AlumnoData {
                 alumno.setEstado(true);
 
             }
-//            else{
-//            
-//            JOptionPane.showMessageDialog(null,"no existe ese alumno");
-//            }
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
