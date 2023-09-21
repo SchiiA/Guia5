@@ -52,7 +52,7 @@ public class MateriaData {
     }
 
     public void modificarMateria(Materia mat) {
-        String query = "UPDATE materia SET nombre=?,año=? ,estado=?"
+        String query = "UPDATE materia SET año=? ,estado=?"
                 + "where idMateria=?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -70,12 +70,11 @@ public class MateriaData {
         }
     }
 
-    public void eliminarMateria(int id) {
-        String SQL = "UPDATE materia SET estado=0"
-                + "where idMateria=?";
+    public void eliminarMateria(String nombre) {
+        String SQL = "UPDATE materia SET estado=false where nombre=?";
         try {
             PreparedStatement ps = con.prepareStatement(SQL);
-            ps.setInt(1, id);
+            ps.setString(1, nombre);
             ps.executeUpdate();
             int exito = ps.executeUpdate();
             if (exito == 1) {
@@ -127,8 +126,6 @@ public class MateriaData {
                 materia.setNombre(nombre);
                 materia.setAnio(rs.getInt("año"));
                 materia.setEstado(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró una materia con ese nombre.");
             }
             ps.close();
         } catch (SQLException ex) {
