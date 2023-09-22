@@ -52,20 +52,22 @@ public class MateriaData {
     }
 
     public void modificarMateria(Materia mat) {
-        String query = "UPDATE materia SET año=? ,estado=? where idMateria=?";
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, mat.getAnio());
-            ps.setBoolean(2, mat.isEstado());
-            ps.setInt(3, mat.getIdMateria());
-            ps.executeUpdate();
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "materia Modificada");
+        if (buscarMateriaPorNombre(mat.getNombre()).getAnio()!=mat.getAnio()) {
+            String query = "UPDATE materia SET año=? ,estado=? where idMateria=?";
+            try {
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setInt(1, mat.getAnio());
+                ps.setBoolean(2, mat.isEstado());
+                ps.setInt(3, mat.getIdMateria());
+                ps.executeUpdate();
+                int exito = ps.executeUpdate();
+                if (exito == 1) {
+                    JOptionPane.showMessageDialog(null, "materia Modificada");
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
             }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
         }
     }
 
@@ -109,8 +111,7 @@ public class MateriaData {
         }
         return materia;
     }
-    
-    
+
     public Materia buscarMateriaPorNombre(String nombre) {
 
         String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1";
@@ -134,8 +135,6 @@ public class MateriaData {
 
         return materia;
     }
-    
-    
 
     public Materia buscarMateriaPorNombre(String nombre, int anio) {
         String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1 AND año = ?";
@@ -160,16 +159,16 @@ public class MateriaData {
 
         return materia;
     }
-    
-    public ArrayList<Materia> listarMaterias(){
-        ArrayList<Materia> materias=new ArrayList<>();
-        Materia materia=null;
-        String sql="select * from materia where estado=true";
+
+    public ArrayList<Materia> listarMaterias() {
+        ArrayList<Materia> materias = new ArrayList<>();
+        Materia materia = null;
+        String sql = "select * from materia where estado=true";
         try {
-            PreparedStatement ps=con.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                materia=new Materia();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                materia = new Materia();
                 materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
                 materia.setAnio(rs.getInt("año"));

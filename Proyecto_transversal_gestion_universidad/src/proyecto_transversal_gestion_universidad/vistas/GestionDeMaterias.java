@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
+import java.sql.SQLException;
 
 /**
  *
@@ -265,7 +266,11 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
         Materia mat = new Materia(Integer.parseInt(jTFCodigo.getText()), jTFNombre.getText(), jYCAnio.getYear(), jRBEstado.isSelected());
+        try{
         matDat.modificarMateria(mat);
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(this, "Materia con año ya existentes");
+        }
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     /**
