@@ -110,6 +110,32 @@ public class MateriaData {
         return materia;
     }
     
+    
+    public Materia buscarMateriaPorNombre(String nombre) {
+
+        String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1";
+        Materia materia = null;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(nombre);
+                materia.setAnio(rs.getInt("año"));
+                materia.setEstado(true);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia: " + ex.getMessage());
+        }
+
+        return materia;
+    }
+    
+    
 
     public Materia buscarMateriaPorNombre(String nombre, int anio) {
         String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1 AND año = ?";
