@@ -164,7 +164,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
                 .addComponent(jBVaciarCampos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBSalir)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,8 +215,8 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         String nombre = jTFNombre.getText();
 
         if (nombre != "") {
-            
-            Materia mat = matDat.buscarMateriaPorNombre(nombre);
+            int anio = Integer.valueOf(jYCAnio.getYear());
+            Materia mat = matDat.buscarMateriaPorNombre(nombre, anio);
 
             if (mat == null) {
                 JOptionPane.showMessageDialog(null, "No se encontró una materia con ese nombre.");
@@ -264,7 +264,8 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
-        matDat.buscarMateria(jTFCodigo.getText());
+        Materia mat = new Materia(Integer.parseInt(jTFCodigo.getText()), jTFNombre.getText(), jYCAnio.getYear(), jRBEstado.isSelected());
+        matDat.modificarMateria(mat);
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     /**

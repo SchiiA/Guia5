@@ -52,13 +52,12 @@ public class MateriaData {
     }
 
     public void modificarMateria(Materia mat) {
-        String query = "UPDATE materia SET año=? ,estado=?"
-                + "where idMateria=?";
+        String query = "UPDATE materia SET año=? ,estado=? where idMateria=?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, mat.getNombre());
-            ps.setInt(2, mat.getAnio());
-            ps.setBoolean(3, mat.isEstado());
+            ps.setInt(1, mat.getAnio());
+            ps.setBoolean(2, mat.isEstado());
+            ps.setInt(3, mat.getIdMateria());
             ps.executeUpdate();
             int exito = ps.executeUpdate();
             if (exito == 1) {
@@ -112,12 +111,13 @@ public class MateriaData {
     }
     
 
-    public Materia buscarMateriaPorNombre(String nombre) {
-        String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1";
+    public Materia buscarMateriaPorNombre(String nombre, int anio) {
+        String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre = ? AND estado = 1 AND año = ?";
         Materia materia = null;
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, nombre);
+            ps.setInt(2, anio);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
