@@ -5,15 +5,11 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
-import java.beans.PropertyVetoException;
-import java.time.Year;
-import java.time.ZoneId;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
-import java.sql.SQLException;
+
 
 /**
  *

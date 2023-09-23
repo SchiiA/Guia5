@@ -192,16 +192,12 @@ public class AlumnoData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 alumno = new Alumno();
-                alumno.setIdAlumno(rs.getInt("idALumno"));
+                alumno.setIdAlumno(id);
                 alumno.setDni(rs.getInt("dni"));
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setEstado(true);
-
-            } else {
-
-                JOptionPane.showMessageDialog(null, "no existe ese alumno");
             }
             ps.close();
         } catch (SQLException ex) {

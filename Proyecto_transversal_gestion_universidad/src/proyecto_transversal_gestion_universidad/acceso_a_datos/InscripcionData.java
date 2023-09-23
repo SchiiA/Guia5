@@ -104,14 +104,13 @@ public class InscripcionData {
         return lista;
     }
     
-    public ArrayList<Materia> obtenerMateriasCursadas(int idAlumno,int idMateria){
+    public ArrayList<Materia> obtenerMateriasCursadas(int idAlumno){
         ArrayList<Materia> lista=new ArrayList<>();
         Materia materia=null;
-        String sql="select * from materia mat join alumno al on (in.idAlumno=al.idAlumno) join inscripcion in on (mat.idMateria=in.idMateria) where mat.idMateria=? and al.idAlumno=?";
+        String sql="select mat.idMateria,año,nombre,estado from materia mat join inscripcion ins on (mat.idMateria=ins.idMateria) where ins.idAlumno=?";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
-            ps.setInt(1, idMateria);
-            ps.setInt(2, idAlumno);
+            ps.setInt(1, idAlumno);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 materia=new Materia();
@@ -128,14 +127,13 @@ public class InscripcionData {
         return lista;
     }
     
-    public ArrayList<Materia> obtenerMateriasNoCursadas(int idAlumno,int idMateria){
+    public ArrayList<Materia> obtenerMateriasNoCursadas(int idAlumno){
         ArrayList<Materia> lista=new ArrayList<>();
         Materia materia=null;
-        String sql="select * from materia mat, alumno al, inscripcion in where mat.idMateria=? and al.idAlumno=? and in.idAlumno=al.idAlumno and mat.idMateria!=in.idMateria";
+        String sql="SELECT * from materia WHERE estado=1 and idMateria NOT in (SELECT idMateria from inscripcion where idAlumno=?)";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
-            ps.setInt(1, idMateria);
-            ps.setInt(2, idAlumno);
+            ps.setInt(1, idAlumno);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 materia=new Materia();
