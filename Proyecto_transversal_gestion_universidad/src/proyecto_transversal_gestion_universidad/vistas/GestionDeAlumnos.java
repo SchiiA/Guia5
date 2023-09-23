@@ -346,9 +346,15 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBVaciarCamposActionPerformed
 
     private void jTDocumentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTDocumentoKeyReleased
-        jBNuevo.setEnabled(true);
-        jBEliminar.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        if (!jBNuevo.isEnabled()) {
+            jBNuevo.setEnabled(true);
+            jBEliminar.setEnabled(false);
+            jBGuardar.setEnabled(false);
+            jTApellido.setText("");
+            jTNombre.setText("");
+            jRBEstado.setSelected(false);
+            jDCFechaNacimiento.setDate(null);
+        }
     }//GEN-LAST:event_jTDocumentoKeyReleased
 
     /**

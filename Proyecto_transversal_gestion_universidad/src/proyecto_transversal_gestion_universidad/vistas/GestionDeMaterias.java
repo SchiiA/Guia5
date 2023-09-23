@@ -78,11 +78,6 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
 
         jTFCodigo.setEditable(false);
 
-        jTFNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFNombreActionPerformed(evt);
-            }
-        });
         jTFNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTFNombreKeyReleased(evt);
@@ -100,6 +95,11 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         });
 
         jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
 
         jBEliminar.setText("Eliminar");
         jBEliminar.setEnabled(false);
@@ -206,10 +206,6 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTFNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFNombreActionPerformed
-
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
 
@@ -256,6 +252,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
             jBEliminar.setEnabled(false);
             jBGuardar.setEnabled(false);
             jTFCodigo.setText("");
+            jRBEstado.setSelected(false);
         }
     }//GEN-LAST:event_jTFNombreKeyReleased
 
@@ -276,6 +273,27 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
             jBVaciarCamposActionPerformed(evt);
         }
     }//GEN-LAST:event_jBGuardarActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+        // TODO add your handling code here:
+        String nombre=jTFNombre.getText();
+        int anio=jYCAnio.getYear();
+        boolean estado=jRBEstado.isSelected();
+        
+        if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No debe tener espacios vacios");
+                return;
+            }
+        if (estado == false) {
+                JOptionPane.showMessageDialog(null, "El estado no debe estar desactivado al ingresar una materia nueva");
+                return;
+            }
+        
+        Materia materia=new Materia(nombre, anio, estado);
+        if(matDat.guardarMateria(materia)){
+            jBVaciarCamposActionPerformed(evt);
+        }
+    }//GEN-LAST:event_jBNuevoActionPerformed
 
     /**
      * @param args the command line arguments

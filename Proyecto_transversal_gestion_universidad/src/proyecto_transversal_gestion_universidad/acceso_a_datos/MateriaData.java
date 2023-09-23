@@ -29,37 +29,63 @@ public class MateriaData {
         this.con = Conexion.getConection();
     }
 
-    public void guardarMateria(Materia mat) {
-        String sql = "INSERT INTO materia(nombre,año,estado) VALUES (?,?,?)";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, mat.getNombre());
-            ps.setInt(2, mat.getAnio());
-            ps.setBoolean(3, mat.isEstado());
-            ps.executeUpdate();
+    public boolean guardarMateria(Materia mat) {
+        boolean verifi=true;
+        if (buscarMateriaPorNombre(mat.getNombre(), mat.getAnio()) == null) {
+            String sql = "INSERT INTO materia(nombre,año,estado) VALUES (?,?,?)";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, mat.getNombre());
+                ps.setInt(2, mat.getAnio());
+                ps.setBoolean(3, mat.isEstado());
+                ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                mat.setIdMateria(rs.getInt(1));
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    mat.setIdMateria(rs.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Materia Guardado!");
+                }
+                ps.close();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
+            }
+        } else {
+            verifi=modificarMateriaExistenteOff(mat);
+        }
+        return verifi;
+    }
+
+    public boolean modificarMateriaExistenteOff(Materia mat) {
+        boolean verifi=false;
+        String sql = "update materia set estado=true,año=? where nombre like ? and estado=false";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, mat.getAnio());
+            ps.setString(2, mat.getNombre());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Materia Guardado!");
+                verifi=true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo tener el ID...");
+                JOptionPane.showMessageDialog(null, "La materia ingresada de ese año ya existe, intente buscarlo por su nombre");
             }
             ps.close();
-            JOptionPane.showMessageDialog(null, "Guardado!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla materia");
         }
+        return verifi;
     }
 
     public boolean modificarMateria(Materia mat) {
-        ArrayList<Materia> materias=new ArrayList<>(listarMaterias(mat.getNombre()));
-        boolean verifi=false;
-        for(Materia re:materias){
-            if(re.getAnio()==mat.getAnio()){
-                verifi=true;
+        ArrayList<Materia> materias = new ArrayList<>(listarMaterias(mat.getNombre()));
+        boolean verifi = false;
+        for (Materia re : materias) {
+            if (re.getAnio() == mat.getAnio()) {
+                verifi = true;
             }
         }
-        if (verifi==false) {
+        if (verifi == false) {
             String query = "UPDATE materia SET año=? ,estado=? where idMateria=?";
             try {
                 PreparedStatement ps = con.prepareStatement(query);
@@ -69,7 +95,7 @@ public class MateriaData {
                 ps.executeUpdate();
                 int exito = ps.executeUpdate();
                 if (exito == 1) {
-                    verifi=true;
+                    verifi = true;
                     JOptionPane.showMessageDialog(null, "materia Modificada");
                 }
                 ps.close();
@@ -77,7 +103,7 @@ public class MateriaData {
                 JOptionPane.showMessageDialog(null, "Error de conexion... " + ex.getMessage());
             }
             return verifi;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "la materia a modificar con el año ingresado ya existe");
             return verifi;
         }
@@ -171,7 +197,7 @@ public class MateriaData {
 
         return materia;
     }
-    
+
     public ArrayList<Materia> listarMaterias(String nombre) {
         ArrayList<Materia> materias = new ArrayList<>();
         Materia materia = null;

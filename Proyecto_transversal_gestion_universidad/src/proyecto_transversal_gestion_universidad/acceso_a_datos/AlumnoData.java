@@ -23,7 +23,7 @@ public class AlumnoData {
     }
 
     public boolean guardarAlumno(Alumno alumno) {
-        boolean veri=true;
+        boolean veri = true;
         if (buscarAlumnoPorDni(alumno.getDni()) == null) {
             String sql = "Insert into alumno (dni,apellido,nombre,fechaNacimiento,estado)" + "values (?,?,?,?,?)";
             try {
@@ -34,30 +34,24 @@ public class AlumnoData {
                 ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));
                 ps.setBoolean(5, alumno.isEstado());
                 ps.executeUpdate();
-
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-
                     alumno.setIdAlumno(rs.getInt(1));
-
                     JOptionPane.showMessageDialog(null, "Alumno Guardado");
-                    veri=true;
-
                 }
                 ps.close();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
             }
-        } else{
-            veri= modificarAlumnoExistenteOff(alumno);
+        } else {
+            veri = modificarAlumnoExistenteOff(alumno);
         }
         return veri;
     }
 
     private boolean modificarAlumnoExistenteOff(Alumno alumno) {
-        boolean veri=false;
+        boolean veri = false;
         String sql = "UPDATE alumno SET apellido= ?,nombre= ?,fechaNacimiento= ?, estado=true WHERE dni= ? and estado=false ";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, alumno.getApellido());
@@ -68,10 +62,9 @@ public class AlumnoData {
             if (exito == 1) {
 
                 JOptionPane.showMessageDialog(null, "alumno Guardado");
-                veri=true;
-            }else{
+                veri = true;
+            } else {
                 JOptionPane.showMessageDialog(null, "alumno ya existente, intente buscarlo por su dni");
-                veri=false;
             }
             ps.close();
         } catch (SQLException ex) {
@@ -143,7 +136,7 @@ public class AlumnoData {
         }
         return alumnos;
     }
-    
+
 //    private Alumno buscarAlumnoPorDni2(int dni) {
 //        String sql = "SELECT * FROM alumno WHERE dni= ?";
 //        Alumno alumno = null;
@@ -166,8 +159,6 @@ public class AlumnoData {
 //        }
 //        return alumno;
 //    }
-    
-
     public Alumno buscarAlumnoPorDni(int dni) {
         String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ? AND estado= 1";
         Alumno alumno = null;
