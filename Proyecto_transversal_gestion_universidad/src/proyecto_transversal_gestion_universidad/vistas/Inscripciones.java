@@ -5,17 +5,26 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
+import proyecto_transversal_gestion_universidad.entidades.Alumno;
+
 /**
  *
  * @author User
  */
 public class Inscripciones extends javax.swing.JInternalFrame {
+    private AlumnoData alumnoData= new AlumnoData();
 
     /**
      * Creates new form Inscripciones
      */
     public Inscripciones() {
         initComponents();
+        cargarComboBox();
+        jBInscribir.setEnabled(true);
+        jBAnularInscripcion.setEnabled(false);
     }
 
     /**
@@ -40,7 +49,6 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         jBSalir = new javax.swing.JButton();
         jBAnularInscripcion = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(500, 400));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -50,7 +58,12 @@ public class Inscripciones extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Seleccione un Alumno:");
 
-        jCBAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        jCBAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBAlumnoActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(jRadioButton2);
         jRadioButton2.setText("Materias no Inscriptas");
@@ -85,6 +98,11 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTMaterias);
 
         jBInscribir.setText("Inscribir");
+        jBInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBInscribirActionPerformed(evt);
+            }
+        });
 
         jBSalir.setText("Salir");
         jBSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +189,16 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jBSalirActionPerformed
 
+    private void jCBAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBAlumnoActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jCBAlumnoActionPerformed
+
+    private void jBInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInscribirActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, jCBAlumno.getSelectedItem().equals(""));
+    }//GEN-LAST:event_jBInscribirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -189,4 +217,11 @@ public class Inscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTMaterias;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarComboBox() {
+        ArrayList<Alumno> alumnos = new ArrayList<>(alumnoData.listarAlumnos());
+        for (Alumno re : alumnos) {
+            jCBAlumno.addItem(re.getDni() + ", " + re.getApellido() + ", " + re.getNombre());
+        }
+    }
 }

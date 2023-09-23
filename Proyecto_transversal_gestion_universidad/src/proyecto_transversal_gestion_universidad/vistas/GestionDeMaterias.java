@@ -221,6 +221,8 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
 
             if (mat == null) {
                 JOptionPane.showMessageDialog(null, "No se encontró una materia con ese nombre.");
+                jTFCodigo.setText("");
+                jRBEstado.setSelected(false);
             } else {
                 jTFCodigo.setText(String.valueOf(mat.getIdMateria()));
                 jYCAnio.setYear(mat.getAnio());
@@ -230,7 +232,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
                 jBGuardar.setEnabled(true);
                 jBNuevo.setEnabled(false);
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "El Campo de Nombre no puede estar vacío");
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
@@ -266,10 +268,12 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
         Materia mat = new Materia(Integer.parseInt(jTFCodigo.getText()), jTFNombre.getText(), jYCAnio.getYear(), jRBEstado.isSelected());
-        try{
-        matDat.modificarMateria(mat);
-        }catch (Exception ex){
-            JOptionPane.showMessageDialog(this, "Materia con año ya existentes");
+
+        if (matDat.modificarMateria(mat)) {
+            jBNuevo.setEnabled(true);
+            jBEliminar.setEnabled(false);
+            jBGuardar.setEnabled(false);
+            jBVaciarCamposActionPerformed(evt);
         }
     }//GEN-LAST:event_jBGuardarActionPerformed
 
