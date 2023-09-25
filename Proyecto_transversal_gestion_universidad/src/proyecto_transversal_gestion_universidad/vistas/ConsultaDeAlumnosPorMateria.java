@@ -6,6 +6,7 @@
 package proyecto_transversal_gestion_universidad.vistas;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.InscripcionData;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
@@ -61,11 +62,8 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Seleccione una Materia");
 
-        jCBMateria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCBMateriaMouseClicked(evt);
-            }
-        });
+        jCBMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        jCBMateria.setToolTipText("");
         jCBMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBMateriaActionPerformed(evt);
@@ -140,16 +138,16 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
     private void jCBMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBMateriaActionPerformed
         // TODO add your handling code here:
         borrarFila();
-        if (jCBMateria.getSelectedIndex() != 0) {
+        try {
             String[] nombreMat = String.valueOf(jCBMateria.getSelectedItem()).split(",");
-            ArrayList<Alumno> alumnos=new ArrayList<>(inscripcionData.obtenerAlumnosXMateria(nombreMat[0]));
+            ArrayList<Alumno> alumnos = new ArrayList<>(inscripcionData.obtenerAlumnosXMateria(nombreMat[0]));
             cargarDatos(alumnos);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una materia");
         }
-    }//GEN-LAST:event_jCBMateriaActionPerformed
 
-    private void jCBMateriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCBMateriaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBMateriaMouseClicked
+
+    }//GEN-LAST:event_jCBMateriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,7 +164,6 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
 
     public void cargaComboBox() {
         ArrayList<Materia> materia = new ArrayList<>(materiaData.listarMaterias());
-        jCBMateria.addItem("");
         for (Materia recoMateria : materia) {
             jCBMateria.addItem(recoMateria.getNombre() + ", " + recoMateria.getAnio());
         }
@@ -187,10 +184,10 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
             modelo.removeRow(i);
         }
     }
-    
+
     private void cargarDatos(ArrayList<Alumno> alumnos) {
-        for(Alumno re:alumnos){
-            modelo.addRow(new Object[]{re.getIdAlumno(), re.getDni(), re.getApellido(),re.getNombre(),re.getFechaNacimiento()});
+        for (Alumno re : alumnos) {
+            modelo.addRow(new Object[]{re.getIdAlumno(), re.getDni(), re.getApellido(), re.getNombre(), re.getFechaNacimiento()});
         }
     }
 }
