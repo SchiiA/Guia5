@@ -5,12 +5,8 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import proyecto_transversal_gestion_universidad.acceso_a_datos.Conexion;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.InscripcionData;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.MateriaData;
 import proyecto_transversal_gestion_universidad.entidades.Alumno;

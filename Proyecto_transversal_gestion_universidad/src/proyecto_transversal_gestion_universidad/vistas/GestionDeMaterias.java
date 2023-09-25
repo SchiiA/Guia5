@@ -47,7 +47,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         jBBuscar = new javax.swing.JButton();
         jBNuevo = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
-        jBGuardar = new javax.swing.JButton();
+        jBModificar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         jBVaciarCampos = new javax.swing.JButton();
 
@@ -105,11 +105,11 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
             }
         });
 
-        jBGuardar.setText("Guardar");
-        jBGuardar.setEnabled(false);
-        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jBModificar.setText("Modificar");
+        jBModificar.setEnabled(false);
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGuardarActionPerformed(evt);
+                jBModificarActionPerformed(evt);
             }
         });
 
@@ -156,12 +156,12 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jBEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBGuardar)
+                .addComponent(jBModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBVaciarCampos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBSalir)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,7 +193,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBNuevo)
                     .addComponent(jBEliminar)
-                    .addComponent(jBGuardar)
+                    .addComponent(jBModificar)
                     .addComponent(jBSalir)
                     .addComponent(jBVaciarCampos))
                 .addGap(20, 20, 20))
@@ -221,7 +221,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
                 jRBEstado.setSelected(mat.isEstado());
 
                 jBEliminar.setEnabled(true);
-                jBGuardar.setEnabled(true);
+                jBModificar.setEnabled(true);
                 jBNuevo.setEnabled(false);
             }
         } else {
@@ -239,6 +239,9 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         jTFNombre.setText("");
         jYCAnio.setYear(1);
         jRBEstado.setSelected(false);
+        jBNuevo.setEnabled(true);
+        jBEliminar.setEnabled(false);
+        jBModificar.setEnabled(false);
     }//GEN-LAST:event_jBVaciarCamposActionPerformed
 
     private void jTFNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFNombreKeyReleased
@@ -246,29 +249,30 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
         if (!jBNuevo.isEnabled()) {
             jBNuevo.setEnabled(true);
             jBEliminar.setEnabled(false);
-            jBGuardar.setEnabled(false);
+            jBModificar.setEnabled(false);
             jTFCodigo.setText("");
             jRBEstado.setSelected(false);
+            jYCAnio.setYear(1);
         }
     }//GEN-LAST:event_jTFNombreKeyReleased
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         // TODO add your handling code here:
-        matDat.eliminarMateria(jTFNombre.getText());
+        matDat.eliminarMateria(jTFNombre.getText(),jYCAnio.getYear());
         jBVaciarCamposActionPerformed(evt);
     }//GEN-LAST:event_jBEliminarActionPerformed
 
-    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
         // TODO add your handling code here:
         Materia mat = new Materia(Integer.parseInt(jTFCodigo.getText()), jTFNombre.getText(), jYCAnio.getYear(), jRBEstado.isSelected());
 
         if (matDat.modificarMateria(mat)) {
             jBNuevo.setEnabled(true);
             jBEliminar.setEnabled(false);
-            jBGuardar.setEnabled(false);
+            jBModificar.setEnabled(false);
             jBVaciarCamposActionPerformed(evt);
         }
-    }//GEN-LAST:event_jBGuardarActionPerformed
+    }//GEN-LAST:event_jBModificarActionPerformed
 
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
         // TODO add your handling code here:
@@ -298,7 +302,7 @@ public class GestionDeMaterias extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBEliminar;
-    private javax.swing.JButton jBGuardar;
+    private javax.swing.JButton jBModificar;
     private javax.swing.JButton jBNuevo;
     private javax.swing.JButton jBSalir;
     private javax.swing.JButton jBVaciarCampos;

@@ -34,7 +34,11 @@ public class Proyecto_transversal_gestion_universidad {
 //        for(Inscripcion re:materias){
 //            System.out.println(re);
 //        }
-System.out.println(alu.buscarAlumnoPorId(12));
+if(mat.buscarMateriaPorNombre("ingles",3)!=null){
+    System.out.println("true");
+}else{
+    System.out.println("false");
+}
 //System.out.println(mat.buscarMateria(1));
     }
 

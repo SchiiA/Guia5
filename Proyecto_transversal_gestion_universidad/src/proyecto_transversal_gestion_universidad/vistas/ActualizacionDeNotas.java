@@ -5,14 +5,7 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto_transversal_gestion_universidad.acceso_a_datos.AlumnoData;
@@ -46,6 +39,7 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
         initComponents();
         cargarComboBox();
         cabecera();
+        jBGuardar.setEnabled(false);
     }
 
     /**
@@ -156,28 +150,27 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
     private void jCbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbAlumnosActionPerformed
         // TODO add your handling code here:
         borrarFila();
-        String[] dni = String.valueOf(jCbAlumnos.getSelectedItem()).split(", ");
-        ArrayList<Inscripcion> inscripcions = new ArrayList<>(inscripcionData.obtenerInscripcionesPorAlumno(Integer.parseInt(dni[0])));
-        for (Inscripcion re : inscripcions) {
-            modelo.addRow(new Object[]{re.getMateria().getIdMateria(), re.getMateria().getNombre(), re.getNota()});
+        try {
+            String[] dni = String.valueOf(jCbAlumnos.getSelectedItem()).split(", ");
+            ArrayList<Inscripcion> inscripcions = new ArrayList<>(inscripcionData.obtenerInscripcionesPorAlumno(Integer.parseInt(dni[0])));
+            jBGuardar.setEnabled(true);
+            if(inscripcions.isEmpty()){
+                jBGuardar.setEnabled(false);
+            }
+            for (Inscripcion re : inscripcions) {
+                modelo.addRow(new Object[]{re.getMateria().getIdMateria(), re.getMateria().getNombre(), re.getNota()});
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un alumno un alumno");
+            jBGuardar.setEnabled(false);
         }
+
     }//GEN-LAST:event_jCbAlumnosActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         // TODO add your handling code here:
         int filaS = jTNotas.getSelectedRow();
         if (filaS != -1) {
-
-            /*experimentar-buscar info:
-            
-            try {
-                Robot robot=new Robot();
-                robot.keyPress(KeyEvent.VK_ENTER);
-            } catch (AWTException ex) {
-                Logger.getLogger(ActualizacionDeNotas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             */
-            //probado:
             nota = Double.valueOf(jTNotas.getValueAt(filaS, 2).toString());
             if (jTNotas.getSelectedColumn() == 2) {
                 if (verif(filaS, nota) == true || nota < 1 || nota > 10) {
@@ -188,8 +181,8 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
                     }
                 } else {
                     String[] dni = String.valueOf(jCbAlumnos.getSelectedItem()).split(", ");
-                    int idAlumno=alumnoData.buscarAlumnoPorDni(Integer.valueOf(dni[0])).getIdAlumno();
-                    int idMateria=(int) jTNotas.getValueAt(filaS, 0);
+                    int idAlumno = alumnoData.buscarAlumnoPorDni(Integer.valueOf(dni[0])).getIdAlumno();
+                    int idMateria = (int) jTNotas.getValueAt(filaS, 0);
                     inscripcionData.actualizarNota(idAlumno, idMateria, nota);
                 }
             }

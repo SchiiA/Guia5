@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.entidades.Materia;
 
@@ -109,11 +107,12 @@ public class MateriaData {
         }
     }
 
-    public void eliminarMateria(String nombre) {
-        String SQL = "UPDATE materia SET estado=false where nombre=?";
+    public void eliminarMateria(String nombre,int anio) {
+        String SQL = "UPDATE materia SET estado=false where nombre=? and año=?";
         try {
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, nombre);
+            ps.setInt(2, anio);
             ps.executeUpdate();
             int exito = ps.executeUpdate();
             if (exito == 1) {
@@ -175,7 +174,7 @@ public class MateriaData {
     }
 
     public Materia buscarMateriaPorNombre(String nombre, int anio) {
-        String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre like ? AND estado = 1 AND año = ?";
+        String sql = "SELECT idMateria, año, estado FROM materia WHERE nombre like ? AND año = ?";
         Materia materia = null;
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {

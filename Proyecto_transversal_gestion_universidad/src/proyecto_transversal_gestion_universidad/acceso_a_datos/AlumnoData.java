@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto_transversal_gestion_universidad.entidades.Alumno;
-import proyecto_transversal_gestion_universidad.entidades.Materia;
 
 public class AlumnoData {
 
@@ -24,7 +23,7 @@ public class AlumnoData {
 
     public boolean guardarAlumno(Alumno alumno) {
         boolean veri = true;
-        if (buscarAlumnoPorDni(alumno.getDni()) == null) {
+        if (buscarAlumnoPorDni2(alumno.getDni()) == null) {
             String sql = "Insert into alumno (dni,apellido,nombre,fechaNacimiento,estado)" + "values (?,?,?,?,?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -42,6 +41,7 @@ public class AlumnoData {
                 ps.close();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+                veri = false;
             }
         } else {
             veri = modificarAlumnoExistenteOff(alumno);
@@ -60,7 +60,6 @@ public class AlumnoData {
             ps.setInt(4, alumno.getDni());
             int exito = ps.executeUpdate();
             if (exito == 1) {
-
                 JOptionPane.showMessageDialog(null, "alumno Guardado");
                 veri = true;
             } else {
@@ -96,9 +95,7 @@ public class AlumnoData {
     }
 
     public void eliminarAlumno(int dni) {
-
         String sql = "UPDATE alumno SET estado =0 WHERE dni= ?";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
@@ -111,7 +108,6 @@ public class AlumnoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error al acceder a la tabla alumno");
         }
-
     }
 
     public List<Alumno> listarAlumnos() {
@@ -137,28 +133,31 @@ public class AlumnoData {
         return alumnos;
     }
 
-//    private Alumno buscarAlumnoPorDni2(int dni) {
-//        String sql = "SELECT * FROM alumno WHERE dni= ?";
-//        Alumno alumno = null;
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, dni);
-//            ResultSet rs = ps.executeQuery();
-//            if (rs.next()) {
-//                alumno = new Alumno();
-//                alumno.setIdAlumno(rs.getInt("idALumno"));
-//                alumno.setDni(rs.getInt("dni"));
-//                alumno.setApellido(rs.getString("apellido"));
-//                alumno.setNombre(rs.getString("nombre"));
-//                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-//                alumno.setEstado(rs.getBoolean("estado"));
-//            }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return alumno;
-//    }
+    //metodo creado para devolver un alumno si su estado=false
+    public Alumno buscarAlumnoPorDni2(int dni) {
+        String sql = "SELECT * FROM alumno WHERE dni= ?";
+        Alumno alumno = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                alumno = new Alumno();
+                alumno.setIdAlumno(rs.getInt("idALumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                alumno.setEstado(rs.getBoolean("estado"));
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alumno;
+    }
+
+    //metodo que devuelve alumno solo con estado=true
     public Alumno buscarAlumnoPorDni(int dni) {
         String sql = "SELECT idAlumno,dni,apellido,nombre,fechaNacimiento FROM alumno WHERE dni= ? AND estado= 1";
         Alumno alumno = null;
@@ -174,7 +173,6 @@ public class AlumnoData {
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setEstado(true);
-
             }
             ps.close();
         } catch (SQLException ex) {

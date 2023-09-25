@@ -50,7 +50,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jDCFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jBNuevo = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
-        jBGuardar = new javax.swing.JButton();
+        jBModificar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         jBVaciarCampos = new javax.swing.JButton();
 
@@ -113,11 +113,11 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             }
         });
 
-        jBGuardar.setText("Guardar");
-        jBGuardar.setEnabled(false);
-        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jBModificar.setText("Modificar");
+        jBModificar.setEnabled(false);
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGuardarActionPerformed(evt);
+                jBModificarActionPerformed(evt);
             }
         });
 
@@ -165,16 +165,16 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                                     .addComponent(jTDocumento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTNombre))
                                 .addGap(47, 47, 47)
-                                .addComponent(jBBuscar)))
-                        .addGap(52, 52, 52))))
+                                .addComponent(jBBuscar)))))
+                .addGap(52, 52, 52))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jBNuevo)
                 .addGap(18, 18, 18)
                 .addComponent(jBEliminar)
                 .addGap(18, 18, 18)
-                .addComponent(jBGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jBModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jBVaciarCampos)
                 .addGap(18, 18, 18)
                 .addComponent(jBSalir)
@@ -210,7 +210,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBNuevo)
-                    .addComponent(jBGuardar)
+                    .addComponent(jBModificar)
                     .addComponent(jBSalir)
                     .addComponent(jBEliminar)
                     .addComponent(jBVaciarCampos))
@@ -229,7 +229,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             boolean estado = jRBEstado.isSelected();
 
             //verificaciones por medio de if
-            if (apellido.isEmpty() || nombre.isEmpty() || fecha == null || jTDocumento.getText().isEmpty()) {
+            if (apellido.isEmpty() || nombre.isEmpty() || jDCFechaNacimiento.getDate()==null || jTDocumento.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No debe tener espacios vacios");
                 return;
             }
@@ -277,7 +277,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                 jDCFechaNacimiento.setDate(java.sql.Date.valueOf(alumnoBuscado.getFechaNacimiento()));
                 jBNuevo.setEnabled(false);
                 jBEliminar.setEnabled(true);
-                jBGuardar.setEnabled(true);
+                jBModificar.setEnabled(true);
             }
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "la busqueda por dni requiere que dni sea dato numerico");
@@ -302,10 +302,10 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jDCFechaNacimiento.setDate(null);
         jBNuevo.setEnabled(true);
         jBEliminar.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        jBModificar.setEnabled(false);
     }//GEN-LAST:event_jBEliminarActionPerformed
 
-    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
         //boton guardar
         if (jTApellido.getText().isEmpty()
                 || jTNombre.getText().isEmpty()
@@ -324,11 +324,11 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
             jDCFechaNacimiento.setDate(null);
             jBNuevo.setEnabled(true);
             jBEliminar.setEnabled(false);
-            jBGuardar.setEnabled(false);
+            jBModificar.setEnabled(false);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El Documento no corresponde a un dato numérico");
         }
-    }//GEN-LAST:event_jBGuardarActionPerformed
+    }//GEN-LAST:event_jBModificarActionPerformed
 
     private void jTDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTDocumentoActionPerformed
         // TODO add your handling code here:
@@ -342,14 +342,14 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jRBEstado.setSelected(false);
         jBNuevo.setEnabled(true);
         jBEliminar.setEnabled(false);
-        jBGuardar.setEnabled(false);
+        jBModificar.setEnabled(false);
     }//GEN-LAST:event_jBVaciarCamposActionPerformed
 
     private void jTDocumentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTDocumentoKeyReleased
         if (!jBNuevo.isEnabled()) {
             jBNuevo.setEnabled(true);
             jBEliminar.setEnabled(false);
-            jBGuardar.setEnabled(false);
+            jBModificar.setEnabled(false);
             jTApellido.setText("");
             jTNombre.setText("");
             jRBEstado.setSelected(false);
@@ -364,7 +364,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBEliminar;
-    private javax.swing.JButton jBGuardar;
+    private javax.swing.JButton jBModificar;
     private javax.swing.JButton jBNuevo;
     private javax.swing.JButton jBSalir;
     private javax.swing.JButton jBVaciarCampos;
