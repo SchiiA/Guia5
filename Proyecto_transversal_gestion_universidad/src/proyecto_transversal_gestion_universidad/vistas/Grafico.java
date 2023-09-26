@@ -53,12 +53,10 @@ public class Grafico extends javax.swing.JFrame {
         jMIManipulacionNotas = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMIAlumnosMateria = new javax.swing.JMenuItem();
-        jMSalir = new javax.swing.JMenu();
 
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 500));
 
         javax.swing.GroupLayout jDesktopPaneLayout = new javax.swing.GroupLayout(jDesktopPane);
         jDesktopPane.setLayout(jDesktopPaneLayout);
@@ -126,9 +124,6 @@ public class Grafico extends javax.swing.JFrame {
         jMenu5.add(jMIAlumnosMateria);
 
         jMenuBar1.add(jMenu5);
-
-        jMSalir.setText("Salir");
-        jMenuBar1.add(jMSalir);
 
         setJMenuBar(jMenuBar1);
 
@@ -229,7 +224,6 @@ public class Grafico extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIManejoInscripciones;
     private javax.swing.JMenuItem jMIManipulacionNotas;
     private javax.swing.JMenu jMMateria;
-    private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
