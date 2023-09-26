@@ -5,11 +5,17 @@
  */
 package proyecto_transversal_gestion_universidad.vistas;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author User
  */
 public class Grafico extends javax.swing.JFrame {
+    
+//    FondoPanel fondo=new FondoPanel();
 
     /**
      * Creates new form Grafico
@@ -29,7 +35,14 @@ public class Grafico extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem2 = new javax.swing.JMenuItem();
-        jDesktopPane = new javax.swing.JDesktopPane();
+        ImageIcon icon=new ImageIcon(getClass().getResource("/imagenes/fondo.png"));
+        Image image=icon.getImage();
+        jDesktopPane = new javax.swing.JDesktopPane(){
+
+            public  void paintComponent(Graphics g){
+                g.drawImage(image, 0, 0, getWidth(),getHeight(),this);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMAlumno = new javax.swing.JMenu();
         jMIFormularioAlumno = new javax.swing.JMenuItem();
