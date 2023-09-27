@@ -139,10 +139,12 @@ public class ConsultaDeAlumnosPorMateria extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         borrarFila();
         try {
-            String[] nombreMat = String.valueOf(jCBMateria.getSelectedItem()).split(",");
-            ArrayList<Alumno> alumnos = new ArrayList<>(inscripcionData.obtenerAlumnosXMateria(nombreMat[0]));
-            cargarDatos(alumnos);
-        } catch (NullPointerException e) {
+            String[] nombreMat = String.valueOf(jCBMateria.getSelectedItem()).split(", ");
+            ArrayList<Alumno> alumnos = new ArrayList<>(inscripcionData.obtenerAlumnosXMateria(nombreMat[0], Integer.valueOf(nombreMat[1])));
+            if (!alumnos.isEmpty()) {
+                cargarDatos(alumnos);
+            }
+        } catch (ArrayIndexOutOfBoundsException aioobe) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una materia");
         }
 
