@@ -161,7 +161,7 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{re.getMateria().getIdMateria(), re.getMateria().getNombre(), re.getNota()});
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un alumno un alumno");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un alumno");
             jBGuardar.setEnabled(false);
         }
 
@@ -187,7 +187,7 @@ public class ActualizacionDeNotas extends javax.swing.JInternalFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "debe seleccionar una fila");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila");
         }
     }//GEN-LAST:event_jBGuardarActionPerformed
 

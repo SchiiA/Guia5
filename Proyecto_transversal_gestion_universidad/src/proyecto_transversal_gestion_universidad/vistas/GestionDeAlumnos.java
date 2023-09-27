@@ -284,7 +284,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                 jBModificar.setEnabled(true);
             }
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "la busqueda por dni requiere que dni sea dato numerico");
+            JOptionPane.showMessageDialog(null, "la busqueda por dni requiere que dni sea dato entero");
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
